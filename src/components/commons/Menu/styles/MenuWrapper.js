@@ -30,9 +30,9 @@ MenuWrapper.Central = styled.div`
     border-bottom: 1px solid #88989E;
     padding: 12px;
     a{
-        text.align: center;
+        text-align: center;
         display: block;
-        text.decoration: none;
+        text-decoration: none;
         color: #88989E;
         transition: 200ms ease-in-out;
         &:hover,
