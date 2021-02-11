@@ -2,7 +2,7 @@ import React from 'react';
 import styled, { css } from 'styled-components';
 import PropTypes from 'prop-types';
 
-const TextStyleVariantsMap = {
+export const TextStyleVariantsMap = {
     paragraph1: css`
         font-size: ${({ theme }) => theme.typographyVariants.paragraph1.fontSize};
         font-weight: ${({ theme }) => theme.typographyVariants.paragraph1.fontWeight};
