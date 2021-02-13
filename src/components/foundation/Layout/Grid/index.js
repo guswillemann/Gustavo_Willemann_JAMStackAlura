@@ -41,36 +41,38 @@ export const Grid = {
         max-width: 100%;
 
         ${function({ value }) {
+            if(value === undefined) return;
             if(typeof value === 'number') {
                 return css `
                     flex: 0 0 ${(100 * value) / 12}%;
+                    max-width: ${(100 * value) / 12}%;
                 `
             }
-            else return ({ value }) => {
-                if(value === undefined) return;
+            else return () => {
                 const baseObject = breakpointsTemplate;
                 for(const element in baseObject) { 
                     if(value[element] === undefined) continue;
                     baseObject[element] = css`
-                    flex: 0 0 ${(100 * value[element]) / 12}%;
+                    flex: 0 0 ${((100 * value[element]) / 12).toFixed(4)}%;
+                    max-width: ${((100 * value[element]) / 12).toFixed(4)}%;
                 `
                 }
                 return breakpointsMedia(baseObject);
             }
         }}
         ${function({ offset }) {
+            if(offset === undefined) return;
             if(typeof offset === 'number') {
-                return css `
+                return css`
                     margin-left: ${(100 * offset) / 12}%;
                 `
             }
-            else return ({ offset }) => {
-                if(offset === undefined) return;
+            else return () => {
                 const baseObject = breakpointsTemplate;
                 for(const element in baseObject) { 
                     if(offset[element] === undefined) continue;
                     baseObject[element] = css`
-                    margin-left: ${(100 * offset[element]) / 12}%;
+                    margin-left: ${((100 * offset[element]) / 12).toFixed(4)}%;
                 `
                 }
                 return breakpointsMedia(baseObject);
