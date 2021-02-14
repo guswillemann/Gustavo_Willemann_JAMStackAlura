@@ -17,8 +17,8 @@ export default function Home() {
     <Grid.Container>
       <Grid.Row>
         <Grid.Column
-          offset={{ xs: 0, md: 1 }}
-          value={{ xs: 12, md: 5 }}
+          offset={{xs: 0, md: 1}}
+          value={{xs: 12, md: 5}}
         >
           <div>
             <Text

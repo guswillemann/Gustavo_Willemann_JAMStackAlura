@@ -44,8 +44,7 @@ export const Grid = {
             if(value === undefined) return;
             if(typeof value === 'number') {
                 return css `
-                    flex: 0 0 ${(100 * value) / 12}%;
-                    max-width: ${(100 * value) / 12}%;
+                    max-width: ${((100 * value) / 12).toFixed(4)}%;
                 `
             }
             else return () => {
@@ -53,7 +52,6 @@ export const Grid = {
                 for(const element in baseObject) { 
                     if(value[element] === undefined) continue;
                     baseObject[element] = css`
-                    flex: 0 0 ${((100 * value[element]) / 12).toFixed(4)}%;
                     max-width: ${((100 * value[element]) / 12).toFixed(4)}%;
                 `
                 }
@@ -64,7 +62,7 @@ export const Grid = {
             if(offset === undefined) return;
             if(typeof offset === 'number') {
                 return css`
-                    margin-left: ${(100 * offset) / 12}%;
+                    margin-left: ${((100 * offset) / 12).toFixed(4)}%;
                 `
             }
             else return () => {
