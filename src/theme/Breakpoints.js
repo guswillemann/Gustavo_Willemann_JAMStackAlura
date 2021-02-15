@@ -1,4 +1,4 @@
-export const breakpoints = {
+const breakpoints = {
   xs: 0,
   sm: 480,
   md: 768,
@@ -6,10 +6,4 @@ export const breakpoints = {
   xl: 1200,
 };
 
-export const breakpointsTemplate = {
-  xs: null,
-  sm: null,
-  md: null,
-  lg: null,
-  xl: null,
-}
+export default breakpoints;

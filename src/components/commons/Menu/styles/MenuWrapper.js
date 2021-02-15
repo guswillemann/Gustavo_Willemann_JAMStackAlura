@@ -2,7 +2,7 @@ import styled, { css } from 'styled-components';
 import breakpointsMedia from '../../../../theme/utils/breakpointsMedia';
 import { TextStyleVariantsMap } from '../../../foundation/Text';
 
-export const MenuWrapper = styled.nav`
+const MenuWrapper = styled.nav`
   font-family: 'Rubik', sans-serif;
   display: flex;
   align-items: center;
@@ -110,3 +110,5 @@ MenuWrapper.RightSide = styled.div`
     `,
   })}
 `;
+
+export default MenuWrapper;
