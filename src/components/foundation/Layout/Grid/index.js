@@ -10,6 +10,7 @@ function setColumnValue() {
     if (value === undefined) return;
     if (typeof value === 'number') {
       return css`
+        flex: 0 0 ${((100 * value) / 12).toFixed(4)}%;
         max-width: ${((100 * value) / 12).toFixed(4)}%;
     `;
     }
@@ -18,7 +19,8 @@ function setColumnValue() {
       // eslint-disable-next-line no-restricted-syntax
       for (const element in value) {
         baseObject[element] = css`
-          max-width: ${((100 * value[element]) / 12).toFixed(4)}%;
+          flex: 0 0 ${((100 * value[element]) / 12).toFixed(4)}%;
+          max-width:${((100 * value[element]) / 12).toFixed(4)}%;
         `;
       }
       return breakpointsMedia(baseObject);
