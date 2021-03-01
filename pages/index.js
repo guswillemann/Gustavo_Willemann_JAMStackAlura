@@ -6,9 +6,10 @@ import Modal from '../src/components/commons/Modal';
 import Box from '../src/components/foundation/Layout/Box';
 import Grid from '../src/components/foundation/Layout/Grid';
 import Text from '../src/components/foundation/Text';
+import FormRegister from '../src/components/patterns/FormRegister';
 
 export default function Home() {
-  const [isModalOpen, setModalState] = React.useState(false);
+  const [isModalOpen, setModalState] = React.useState(true);
 
   return (
     <Box
@@ -26,13 +27,7 @@ export default function Home() {
         onClose={() => setModalState(false)}
       >
         {(modalProps) => (
-          <Box
-            backgroundColor="white"
-            // eslint-disable-next-line react/jsx-props-no-spreading
-            {...modalProps}
-          >
-            Conteudo da modal.
-          </Box>
+          <FormRegister modalProps={modalProps} />
         )}
       </Modal>
 
