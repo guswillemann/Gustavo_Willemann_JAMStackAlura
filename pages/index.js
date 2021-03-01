@@ -1,12 +1,15 @@
 import React from 'react';
-import Menu from '../src/components/commons/Menu';
-import Footer from '../src/components/commons/Footer';
-import Text from '../src/components/foundation/Text';
 import Button from '../src/components/commons/Button';
-import Grid from '../src/components/foundation/Layout/Grid';
+import Footer from '../src/components/commons/Footer';
+import Menu from '../src/components/commons/Menu';
+import Modal from '../src/components/commons/Modal';
 import Box from '../src/components/foundation/Layout/Box';
+import Grid from '../src/components/foundation/Layout/Grid';
+import Text from '../src/components/foundation/Text';
 
 export default function Home() {
+  const [isModalOpen, setModalState] = React.useState(false);
+
   return (
     <Box
       flex={1}
@@ -18,6 +21,21 @@ export default function Home() {
       backgroundRepeat="no-repeat"
       backgroundPosition="bottom right"
     >
+      <Modal
+        isOpen={isModalOpen}
+        onClose={() => setModalState(false)}
+      >
+        {(modalProps) => (
+          <Box
+            backgroundColor="white"
+            // eslint-disable-next-line react/jsx-props-no-spreading
+            {...modalProps}
+          >
+            Conteudo da modal.
+          </Box>
+        )}
+      </Modal>
+
       <Menu />
 
       <Grid.Container
@@ -66,6 +84,7 @@ export default function Home() {
                   md: 'initial',
                 }}
                 display="block"
+                onClick={() => setModalState(!isModalOpen)}
               >
                 Cadastrar
               </Button>
