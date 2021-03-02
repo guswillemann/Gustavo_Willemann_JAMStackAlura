@@ -24,7 +24,7 @@ export default function TextField({
   placeholder,
   name,
   onChange,
-  value,
+  // value,
 }) {
   return (
     <InputWrapper>
@@ -33,7 +33,7 @@ export default function TextField({
         placeholder={placeholder}
         name={name}
         onChange={onChange}
-        value={value}
+        // value={value}
       />
     </InputWrapper>
   );
@@ -43,5 +43,5 @@ TextField.propTypes = {
   placeholder: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired,
-  value: PropTypes.string.isRequired,
+  // value: PropTypes.string.isRequired,
 };
