@@ -1,9 +1,9 @@
-import React from 'react';
 import PropTypes from 'prop-types';
+import React from 'react';
 import { Logo } from '../../../theme/Logo';
-import MenuWrapper from './styles/MenuWrapper';
+import Text from '../../foundation/Text';
 import Button from '../Button';
-import Link from '../Link';
+import MenuWrapper from './styles/MenuWrapper';
 
 const links = [
   {
@@ -29,9 +29,9 @@ export default function Menu({ onRegisterClick }) {
       <MenuWrapper.Central>
         {links.map((link) => (
           <li key={link.url}>
-            <Link href={link.url}>
+            <Text variant="smallestException" tag="a" href={link.url}>
               {link.texto}
-            </Link>
+            </Text>
           </li>
         ))}
       </MenuWrapper.Central>
