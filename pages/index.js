@@ -9,7 +9,7 @@ import Text from '../src/components/foundation/Text';
 import FormRegister from '../src/components/patterns/FormRegister';
 
 export default function Home() {
-  const [isModalOpen, setModalState] = React.useState(true);
+  const [isModalOpen, setModalState] = React.useState(false);
 
   return (
     <Box
@@ -31,7 +31,9 @@ export default function Home() {
         )}
       </Modal>
 
-      <Menu />
+      <Menu
+        onRegisterClick={() => setModalState(true)}
+      />
 
       <Grid.Container
         marginTop={{
