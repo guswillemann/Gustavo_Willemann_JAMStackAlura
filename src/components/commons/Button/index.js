@@ -1,49 +1,54 @@
-/* eslint-disable func-names */
+/* eslint-disable react/jsx-props-no-spreading */
+import React from 'react';
+import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
 import get from 'lodash/get';
+import Link from '../Link';
 import { TextStyleVariantsMap } from '../../foundation/Text';
 import breakpointsMedia from '../../../theme/utils/breakpointsMedia';
 import propToStyle from '../../../theme/utils/propToStyle';
 
-const buttonGhost = css`
+const ButtonGhost = css`
   color: ${(props) => get(props.theme, `colors.${props.variant}.color`)};
-  background-color: transparent;
+  background: transparent; 
 `;
 
-const buttonDefault = css`
+const ButtonDefault = css`
+  color: white;
   background-color: ${(props) => get(props.theme, `colors.${props.variant}.color`)};
   color: ${(props) => get(props.theme, `colors.${props.variant}.contrastText`)};
 `;
 
-const Button = styled.button`
+const ButtonWrapper = styled.button`
   border: 0;
   cursor: pointer;
   padding: 12px 26px;
   font-weight: bold;
   opacity: 1;
-  border-radius: ${({ theme }) => theme.transtion};
-  border-radius: ${({ theme }) => theme.borderRadius};
-  ${function (props) {
+  border-radius: 8px;
+  ${TextStyleVariantsMap.smallestException}
+  ${(props) => {
     if (props.ghost) {
-      return buttonGhost;
+      return ButtonGhost;
     }
-
-    return buttonDefault;
-  }};
-  &:hover, &:focus {
+    return ButtonDefault;
+  }}
+  transition: opacity ${({ theme }) => theme.transition};
+  border-radius: ${(props) => props.theme.borderRadius};
+  &:hover,
+  &:focus {
     opacity: .5;
   }
-
   ${breakpointsMedia({
     xs: css`
-     ${TextStyleVariantsMap.smallestException};
+      /* All devices */
+      ${TextStyleVariantsMap.smallestException}
     `,
     md: css`
-     ${TextStyleVariantsMap.paragraph1};
+     /* From md breakpoint */
+     ${TextStyleVariantsMap.paragraph1}
     `,
-  })};
-  ${propToStyle('margin')}
-  ${propToStyle('display')}
+  })}
   &:disabled {
     cursor: not-allowed;
     opacity: .2;
@@ -51,6 +56,29 @@ const Button = styled.button`
   ${({ fullWidth }) => fullWidth && css`
     width: 100%;
   `};
+  ${propToStyle('margin')}
+  ${propToStyle('display')}
 `;
 
-export default Button;
+export default function Button({ href, children, ...props }) {
+  const hasHref = Boolean(href);
+  const tag = hasHref ? Link : 'button';
+  return (
+    <ButtonWrapper
+      as={tag}
+      href={href}
+      {...props}
+    >
+      {children}
+    </ButtonWrapper>
+  );
+}
+
+Button.defaultProps = {
+  href: undefined,
+};
+
+Button.propTypes = {
+  href: PropTypes.string,
+  children: PropTypes.node.isRequired,
+};
