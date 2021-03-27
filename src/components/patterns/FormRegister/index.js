@@ -92,6 +92,7 @@ function FormContent() {
           name="name"
           placeholder="Nome"
           onChange={handleChange}
+          value={userInfo.name}
         />
       </div>
       <div>
@@ -100,6 +101,7 @@ function FormContent() {
           name="userName"
           placeholder="Usuário"
           onChange={handleChange}
+          value={userInfo.userName}
         />
       </div>
       <Button
