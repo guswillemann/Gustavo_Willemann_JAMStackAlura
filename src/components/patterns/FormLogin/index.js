@@ -1,9 +1,21 @@
 import React from 'react';
 import { useRouter } from 'next/router';
+import * as yup from 'yup';
 import Button from '../../commons/Button';
 import TextField from '../../forms/TextField';
 import useForm from '../../../infra/hooks/forms/useForm';
 import loginService from '../../../services/login/loginService';
+
+const loginSchema = yup.object().shape({
+  user: yup
+    .string()
+    .required('"Usuário" é obrigatório')
+    .min(3, 'O usuário deve ter ao menos 3 caracteres'),
+  password: yup
+    .string()
+    .required('"Senha" é obrigatória')
+    .min(8, 'A senha deve ter ao menos 8 caracteres'),
+});
 
 export default function LoginForm() {
   const router = useRouter();
@@ -23,8 +35,12 @@ export default function LoginForm() {
           router.push('/app/profile');
         });
     },
+    async validateSchema(values) {
+      return loginSchema.validate(values, {
+        abortEarly: false,
+      });
+    },
   });
-
   return (
     <form id="formLogin" onSubmit={form.handleSubmit}>
       <TextField
@@ -32,6 +48,9 @@ export default function LoginForm() {
         name="user"
         value={form.values.user}
         onChange={form.handleChange}
+        error={form.errors.user}
+        isTouched={form.touched.user}
+        onBlur={form.handleBlur}
       />
       <TextField
         placeholder="Senha"
@@ -39,6 +58,9 @@ export default function LoginForm() {
         type="password"
         value={form.values.password}
         onChange={form.handleChange}
+        error={form.errors.password}
+        isTouched={form.touched.password}
+        onBlur={form.handleBlur}
       />
 
       <Button
@@ -49,6 +71,7 @@ export default function LoginForm() {
           md: 'initial',
         }}
         fullWidth
+        disabled={form.isFormDisabled}
       >
         Entrar
       </Button>
