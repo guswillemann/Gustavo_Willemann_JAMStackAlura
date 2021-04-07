@@ -8,24 +8,27 @@ export default function useForm({
   const [errors, setErrors] = useState({});
   const [touched, setTouchedFields] = useState({});
 
+  async function validateValues(currentValues) {
+    try {
+      await validateSchema(currentValues);
+      setErrors({});
+      setIsformDisabled(false);
+    } catch (err) {
+      const fromatedErrors = err.inner.reduce((errorObjectAcc, currentError) => {
+        const fieldName = currentError.path;
+        const errorMessage = currentError.message;
+        return {
+          ...errorObjectAcc,
+          [fieldName]: errorMessage,
+        };
+      }, {});
+      setErrors(fromatedErrors);
+      setIsformDisabled(true);
+    }
+  }
+
   useEffect(() => {
-    validateSchema(values)
-      .then(() => {
-        setIsformDisabled(false);
-        setErrors({});
-      })
-      .catch((err) => {
-        const fromatedErrors = err.inner.reduce((errorObjectAcc, currentError) => {
-          const fieldName = currentError.path;
-          const errorMessage = currentError.message;
-          return {
-            ...errorObjectAcc,
-            [fieldName]: errorMessage,
-          };
-        }, {});
-        setErrors(fromatedErrors);
-        setIsformDisabled(true);
-      });
+    validateValues(values);
   }, [values]);
 
   return {
@@ -45,7 +48,9 @@ export default function useForm({
     },
     // form validation
     isFormDisabled,
+    setIsformDisabled,
     errors,
+    setErrors,
     touched,
     handleBlur(event) {
       const fieldName = event.target.getAttribute('name');

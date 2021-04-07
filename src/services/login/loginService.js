@@ -11,10 +11,9 @@ async function HttpClient(url, { headers, body, ...options }) {
     ...options,
   })
     .then((serverResponse) => {
-      if (serverResponse.ok) {
-        return serverResponse.json();
-      }
-      throw new Error('Falha em obter os dados do servidor');
+      if (serverResponse.ok) return serverResponse.json();
+      if (serverResponse.status === 401) throw new Error('Acesso negado, verifique seu usuário e senha');
+      else throw new Error('Falha em obter os dados do servidor');
     });
 }
 

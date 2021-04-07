@@ -32,6 +32,7 @@
     "@testing-library/jest-dom": "^5.11.10",
     "@testing-library/react": "^11.2.6",
     "@testing-library/react-hooks": "^5.1.1",
+    "@testing-library/user-event": "^13.1.1",
     "@types/jest": "^26.0.22",
     "babel-plugin-styled-components": "^1.8.0",
     "cz-conventional-changelog": "^3.3.0",

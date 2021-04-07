@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { useRouter } from 'next/router';
 import * as yup from 'yup';
 import Button from '../../commons/Button';
@@ -17,7 +18,7 @@ const loginSchema = yup.object().shape({
     .min(8, 'A senha deve ter ao menos 8 caracteres'),
 });
 
-export default function LoginForm() {
+export default function LoginForm({ onSubmit }) {
   const router = useRouter();
   const initicalValues = {
     user: '',
@@ -27,12 +28,23 @@ export default function LoginForm() {
   const form = useForm({
     initicalValues,
     onSubmit: (values) => {
+      form.setIsformDisabled(true);
       loginService.login({
         username: values.user,
         password: values.password,
       })
         .then(() => {
           router.push('/app/profile');
+        })
+        .catch((err) => {
+          const error = err;
+          error.name = '';
+
+          const errorMessage = error.toString();
+          form.setErrors({ server: errorMessage });
+        })
+        .finally(() => {
+          form.setIsformDisabled(false);
         });
     },
     async validateSchema(values) {
@@ -41,8 +53,9 @@ export default function LoginForm() {
       });
     },
   });
+
   return (
-    <form id="formLogin" onSubmit={form.handleSubmit}>
+    <form id="formLogin" onSubmit={onSubmit || form.handleSubmit}>
       <TextField
         placeholder="Usuário"
         name="user"
@@ -75,6 +88,15 @@ export default function LoginForm() {
       >
         Entrar
       </Button>
+      {form.errors.server && <span>{form.errors.server}</span>}
     </form>
   );
 }
+
+LoginForm.defaultProps = {
+  onSubmit: undefined,
+};
+
+LoginForm.propTypes = {
+  onSubmit: PropTypes.func,
+};
