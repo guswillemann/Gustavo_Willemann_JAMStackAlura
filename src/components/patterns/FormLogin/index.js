@@ -20,13 +20,13 @@ const loginSchema = yup.object().shape({
 
 export default function LoginForm({ onSubmit }) {
   const router = useRouter();
-  const initicalValues = {
+  const initialValues = {
     user: '',
     password: '',
   };
 
   const form = useForm({
-    initicalValues,
+    initialValues,
     onSubmit: (values) => {
       form.setIsformDisabled(true);
       loginService.login({

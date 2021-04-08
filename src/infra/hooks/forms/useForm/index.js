@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
 
 export default function useForm({
-  initicalValues, onSubmit, validateSchema,
+  initialValues, onSubmit, validateSchema,
 }) {
-  const [values, setValues] = useState(initicalValues);
+  const [values, setValues] = useState(initialValues);
   const [isFormDisabled, setIsformDisabled] = useState(true);
   const [errors, setErrors] = useState({});
   const [touched, setTouchedFields] = useState({});
