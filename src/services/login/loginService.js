@@ -18,7 +18,7 @@ async function HttpClient(url, { headers, body, ...options }) {
 }
 
 const BASE_URL = isStaginEnv
-  ? 'https://instalura-api-git-master.omariosouto.vercel.app'
+  ? 'https://instalura-api-git-master-omariosouto.vercel.app'
   : 'https://instalura-api-omariosouto.vercel.app';
 
 const loginService = {
