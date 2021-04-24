@@ -12,13 +12,16 @@
     "test:integration:open": "cypress open",
     "test:integration": "cypress run --headless",
     "test:integration:build": "start-server-and-test build/start http-get://localhost:3000 test:integration",
-    "build/start": "yarn build && yarn start"
+    "build/start": "yarn build && yarn start",
+    "commit": "cz"
   },
   "dependencies": {
     "@crello/react-lottie": "0.0.11",
     "cypress": "^6.8.0",
     "eslint-plugin-cypress": "^2.11.2",
     "framer-motion": "^3.9.0",
+    "graphql": "^15.5.0",
+    "graphql-request": "^3.4.0",
     "lodash": "^4.17.20",
     "next": "latest",
     "nookies": "^2.5.2",
