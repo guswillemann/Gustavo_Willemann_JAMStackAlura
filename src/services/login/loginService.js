@@ -1,25 +1,14 @@
 import { setCookie, destroyCookie } from 'nookies';
 import isStaginEnv from '../../infra/env/isStagingEnv';
-
-async function HttpClient(url, { headers, body, ...options }) {
-  return fetch(url, {
-    headers: {
-      ...headers,
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(body),
-    ...options,
-  })
-    .then((serverResponse) => {
-      if (serverResponse.ok) return serverResponse.json();
-      if (serverResponse.status === 401) throw new Error('Acesso negado, verifique seu usuário e senha');
-      else throw new Error('Falha em obter os dados do servidor');
-    });
-}
+import HttpClient from '../../infra/http/HttpClient';
 
 const BASE_URL = isStaginEnv
+  // Back End de DEV
   ? 'https://instalura-api-git-master-omariosouto.vercel.app'
+  // Back End de PROD
   : 'https://instalura-api-omariosouto.vercel.app';
+
+export const LOGIN_COOKIE_APP_TOKEN = 'LOGIN_COOKIE_APP_TOKEN';
 
 const loginService = {
   async login(
@@ -37,7 +26,7 @@ const loginService = {
       const { token } = responseAsJson.data;
       if (!token) throw new Error('Failed to login');
       const DAY_IN_SECONDS = 86400;
-      setCookieModule(null, 'APP_TOKEN', token, {
+      setCookieModule(null, LOGIN_COOKIE_APP_TOKEN, token, {
         path: '/',
         maxAge: DAY_IN_SECONDS * 7,
       });
@@ -46,8 +35,8 @@ const loginService = {
       };
     });
   },
-  async logout(destroyCookieModule = destroyCookie) {
-    destroyCookieModule(null, 'APP_TOKEN');
+  async logout(ctx, destroyCookieModule = destroyCookie) {
+    destroyCookieModule(ctx, LOGIN_COOKIE_APP_TOKEN, { path: '/' });
   },
 };
 
