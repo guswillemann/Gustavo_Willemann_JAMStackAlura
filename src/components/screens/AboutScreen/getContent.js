@@ -1,7 +1,7 @@
 import { CMSGraphQLClient, gql } from '../../../infra/cms/CMSGraphQLClient';
 
 // eslint-disable-next-line import/prefer-default-export
-export async function getContent() {
+export async function getContent({ preview }) {
   const query = gql`
     query {
       pageAbout {
@@ -10,7 +10,7 @@ export async function getContent() {
       }
     }
   `;
-  const client = CMSGraphQLClient();
+  const client = CMSGraphQLClient({ preview });
 
   const response = await client.query({ query });
 
