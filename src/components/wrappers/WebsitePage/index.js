@@ -40,6 +40,7 @@ export default function WebsitePageWrapper({
         display="flex"
         flex="1"
         flexDirection="column"
+        justifyContent="space-between"
         {...pageBoxProps}
       >
         <Modal

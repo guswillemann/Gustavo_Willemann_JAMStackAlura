@@ -1,18 +1,15 @@
-import React from 'react';
+import websitePageHOC from '../../src/components/wrappers/WebsitePage/hoc';
+import ProfileScreen from '../../src/components/screens/app/ProfileScreen';
 import authService from '../../src/services/auth/authService';
 import userService from '../../src/services/user/userService';
 
-export default function ProfilePage(props) {
-  return (
-    <div>
-      Página de Profile!
-      <pre>
-        {JSON.stringify(props, null, 4)}
-      </pre>
-      <img src="https://media.giphy.com/media/bn0zlGb4LOyo8/giphy.gif" alt="Nicolas Cage" />
-    </div>
-  );
-}
+export default websitePageHOC(ProfileScreen, {
+  pageWrapperProps: {
+    menuProps: {
+      display: false,
+    },
+  },
+});
 
 export async function getServerSideProps(ctx) {
   const auth = authService(ctx);
@@ -21,6 +18,7 @@ export async function getServerSideProps(ctx) {
   if (hasActiveSession) {
     const session = await auth.getSession();
     const profilePage = await userService.getProfilePage(ctx);
+
     return {
       props: {
         user: {
@@ -28,6 +26,11 @@ export async function getServerSideProps(ctx) {
           ...profilePage.user,
         },
         posts: profilePage.posts,
+        pageWrapperProps: {
+          seoProps: {
+            headTitle: session.username,
+          },
+        },
       },
     };
   }
