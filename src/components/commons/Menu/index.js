@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import { Logo } from '../../../theme/Logo';
+import FormSearch from '../../patterns/FormSearch';
 import Text from '../../foundation/Text';
 import Button from '../Button';
 import MenuWrapper from './styles/MenuWrapper';
@@ -20,7 +21,20 @@ const links = [
   },
 ];
 
-export default function Menu({ onRegisterClick }) {
+export default function Menu({ onRegisterClick, isProfilePage }) {
+  if (isProfilePage) {
+    return (
+      <MenuWrapper>
+        <MenuWrapper.LeftSide>
+          <Logo />
+        </MenuWrapper.LeftSide>
+        <MenuWrapper.RightSide>
+          <FormSearch />
+        </MenuWrapper.RightSide>
+      </MenuWrapper>
+    );
+  }
+
   return (
     <MenuWrapper>
       <MenuWrapper.LeftSide>
@@ -48,5 +62,11 @@ export default function Menu({ onRegisterClick }) {
 }
 
 Menu.propTypes = {
-  onRegisterClick: PropTypes.func.isRequired,
+  onRegisterClick: PropTypes.func,
+  isProfilePage: PropTypes.bool,
+};
+
+Menu.defaultProps = {
+  onRegisterClick: undefined,
+  isProfilePage: false,
 };

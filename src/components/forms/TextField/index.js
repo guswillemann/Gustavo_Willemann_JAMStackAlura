@@ -20,6 +20,10 @@ const Input = styled(Text)`
       font-size: 11px;
       }
   `}
+  ${({ isSearchBox }) => {
+    if (isSearchBox) return 'padding-left: 2.7rem';
+    return undefined;
+  }}
 `;
 
 Input.defaultProps = {
@@ -34,6 +38,7 @@ export default function TextField({
   value,
   error,
   isTouched,
+  isSearchBox,
   ...props
 }) {
   const hasError = Boolean(error);
@@ -47,6 +52,7 @@ export default function TextField({
         onChange={onChange}
         value={value}
         isFieldInvalid={isFieldInvalid}
+        isSearchBox={isSearchBox}
         // eslint-disable-next-line react/jsx-props-no-spreading
         {...props}
       />
@@ -66,6 +72,7 @@ export default function TextField({
 TextField.defaultProps = {
   error: undefined,
   isTouched: undefined,
+  isSearchBox: false,
 };
 
 TextField.propTypes = {
@@ -75,4 +82,5 @@ TextField.propTypes = {
   value: PropTypes.string.isRequired,
   error: PropTypes.string,
   isTouched: PropTypes.bool,
+  isSearchBox: PropTypes.bool,
 };
