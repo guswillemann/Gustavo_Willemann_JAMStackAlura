@@ -56,6 +56,7 @@ export default function WebsitePageWrapper({
         {menuProps.display && (
           <Menu
             onRegisterClick={() => setModalState(true)}
+            isAppPage={menuProps.isAppPage}
           />
         )}
         {children}
@@ -70,6 +71,7 @@ WebsitePageWrapper.defaultProps = {
   pageBoxProps: {},
   menuProps: {
     display: true,
+    isAppPage: false,
   },
   messages: {},
 };
@@ -80,6 +82,7 @@ WebsitePageWrapper.propTypes = {
   }),
   menuProps: PropTypes.shape({
     display: PropTypes.bool,
+    isAppPage: PropTypes.bool,
   }),
   pageBoxProps: PropTypes.shape({
     backgroundImage: PropTypes.string,

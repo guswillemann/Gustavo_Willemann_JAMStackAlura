@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import styled from 'styled-components';
 import { Logo } from '../../../theme/Logo';
 import FormSearch from '../../patterns/FormSearch';
 import Text from '../../foundation/Text';
@@ -8,21 +9,37 @@ import MenuWrapper from './styles/MenuWrapper';
 
 const links = [
   {
-    texto: 'Home',
+    text: 'Home',
     url: '/',
   },
   {
-    texto: 'Perguntas frequentes',
+    text: 'Perguntas frequentes',
     url: '/faq',
   },
   {
-    texto: 'Sobre',
+    text: 'Sobre',
     url: '/sobre',
   },
 ];
 
-export default function Menu({ onRegisterClick, isProfilePage }) {
-  if (isProfilePage) {
+const IconButton = styled(Button)`
+  padding: 0;
+  font-size: 0;
+  background-color: transparent;
+  margin-left: 35px;
+
+  img {
+    height: 30px;
+  }
+`;
+
+const AvatarImage = styled.img`
+  margin-left: 35px;
+  border-radius: 50%;
+`;
+
+export default function Menu({ onRegisterClick, isAppPage }) {
+  if (isAppPage) {
     return (
       <MenuWrapper>
         <MenuWrapper.LeftSide>
@@ -30,6 +47,10 @@ export default function Menu({ onRegisterClick, isProfilePage }) {
         </MenuWrapper.LeftSide>
         <MenuWrapper.RightSide>
           <FormSearch />
+          <IconButton><img src="/icons/postIcon.svg" alt="Post" /></IconButton>
+          <IconButton><img src="/icons/home.svg" alt="Home" /></IconButton>
+          <IconButton><img src="/icons/heart.svg" alt="Like" /></IconButton>
+          <AvatarImage src="http://placehold.it/50x50" alt="Avatar" />
         </MenuWrapper.RightSide>
       </MenuWrapper>
     );
@@ -44,7 +65,7 @@ export default function Menu({ onRegisterClick, isProfilePage }) {
         {links.map((link) => (
           <li key={link.url}>
             <Text variant="smallestException" tag="a" href={link.url}>
-              {link.texto}
+              {link.text}
             </Text>
           </li>
         ))}
@@ -63,10 +84,10 @@ export default function Menu({ onRegisterClick, isProfilePage }) {
 
 Menu.propTypes = {
   onRegisterClick: PropTypes.func,
-  isProfilePage: PropTypes.bool,
+  isAppPage: PropTypes.bool,
 };
 
 Menu.defaultProps = {
   onRegisterClick: undefined,
-  isProfilePage: false,
+  isAppPage: false,
 };

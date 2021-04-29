@@ -6,7 +6,8 @@ import userService from '../../src/services/user/userService';
 export default websitePageHOC(ProfileScreen, {
   pageWrapperProps: {
     menuProps: {
-      display: false,
+      display: true,
+      isAppPage: true,
     },
   },
 });
