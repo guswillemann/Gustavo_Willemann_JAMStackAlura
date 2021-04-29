@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import HttpClient from '../../../infra/http/HttpClient';
 import Button from '../../commons/Button';
 import TextField from '../../forms/TextField';
+import SearchResults from './components/SearchResults';
 
-const MagnifyingGlass = styled(Button)`
+const SearchBtn = styled(Button)`
   background-color: transparent;
   position: absolute;
   top: 50%;
@@ -12,44 +13,92 @@ const MagnifyingGlass = styled(Button)`
   transform: translate(50%, -50%);
   font-size: 0;
   padding: 0;
+
+  &:disabled {
+    cursor: default;
+  }
 `;
 
-const BASE_URL = 'https://instalura-api.vercel.app';
+const FormSearchWrapper = styled.form`
+  position: relative;
+`;
 
 export default function FormSearch() {
-  const [searchValue, setSearchValue] = useState('');
+  const searchInitialResult = [];
+
+  const [searchArg, setSearchArg] = useState('');
+  const [searchID, setSearchID] = useState(0);
+  const [searchResult, setSearchResult] = useState(searchInitialResult);
+  const [isSearchResultVisible, setIsSearchResultVisible] = useState(false);
+
+  const hasSearchResult = searchResult.length !== 0;
+  const isValidForm = Boolean(searchArg);
+
+  function sendSearchRequest() {
+    HttpClient('/api/search', {
+      method: 'POST',
+      body: {
+        searchArg,
+      },
+    })
+      .then((response) => {
+        setSearchResult(response);
+        setIsSearchResultVisible(true);
+      });
+  }
 
   function onSubmit(event) {
     event.preventDefault();
-    const url = `${BASE_URL}/api/users`;
-    HttpClient(url, {})
-      .then((res) => res.data.filter((user) => {
-        const searchRegExp = new RegExp(searchValue);
-        return searchRegExp.test(user.username);
-      }))
-      // eslint-disable-next-line no-console
-      .then((users) => console.log(users));
+    clearTimeout(searchID);
+    sendSearchRequest();
   }
 
   function handleChange(event) {
     const { value } = event.target;
-    setSearchValue(value);
+    setSearchArg(value);
   }
 
+  useEffect(() => {
+    const closeResult = () => setIsSearchResultVisible(false);
+    if (isSearchResultVisible) document.addEventListener('click', closeResult);
+    return () => document.removeEventListener('click', closeResult);
+  }, [isSearchResultVisible]);
+
+  useEffect(() => {
+    if (isValidForm) {
+      clearTimeout(searchID);
+      setSearchID(setTimeout(sendSearchRequest, 250));
+    } else {
+      clearTimeout(searchID);
+      setSearchResult(searchInitialResult);
+      setIsSearchResultVisible(false);
+    }
+  }, [searchArg]);
+
   return (
-    <form onSubmit={onSubmit}>
-      <div style={{ position: 'relative' }}>
-        <TextField
-          name="search"
-          placeholder="Pesquisar"
-          value={searchValue}
-          onChange={handleChange}
-          isSearchBox
+    <FormSearchWrapper
+      onSubmit={onSubmit}
+      onClick={() => setIsSearchResultVisible(true)}
+    >
+      <TextField
+        name="search"
+        placeholder="Pesquisar"
+        value={searchArg}
+        onChange={handleChange}
+        autoComplete="off"
+        isSearchBox
+      />
+      <SearchBtn
+        type="submit"
+        disabled={!isValidForm}
+      >
+        <img src="/icons/search.svg" alt="Lupa" />
+      </SearchBtn>
+      {isSearchResultVisible && hasSearchResult && (
+        <SearchResults
+          searchResult={searchResult}
         />
-        <MagnifyingGlass type="submit">
-          <img src="/icons/search.svg" alt="Lupa" />
-        </MagnifyingGlass>
-      </div>
-    </form>
+      )}
+    </FormSearchWrapper>
   );
 }

@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import Text from '../../foundation/Text';
 
 const InputWrapper = styled.div`
-  margin-bottom: 17px;
+  ${({ isSearchBox }) => !isSearchBox && 'margin-bottom: 17px'}
 `;
 
 const Input = styled(Text)`
@@ -20,10 +20,7 @@ const Input = styled(Text)`
       font-size: 11px;
       }
   `}
-  ${({ isSearchBox }) => {
-    if (isSearchBox) return 'padding-left: 2.7rem';
-    return undefined;
-  }}
+  ${({ isSearchBox }) => isSearchBox && 'padding-left: 2.7rem'}
 `;
 
 Input.defaultProps = {
@@ -44,7 +41,9 @@ export default function TextField({
   const hasError = Boolean(error);
   const isFieldInvalid = hasError && isTouched;
   return (
-    <InputWrapper>
+    <InputWrapper
+      isSearchBox={isSearchBox}
+    >
       <Input
         type="text"
         placeholder={placeholder}

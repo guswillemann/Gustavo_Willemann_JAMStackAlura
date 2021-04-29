@@ -4,7 +4,7 @@ const url = 'https://instalura-api.vercel.app/api/users';
 
 export default async function handler(req, res) {
   if (req.method !== 'POST') {
-    res.status(400).json({ error: 'Utilize o método: POST' });
+    res.status(501).json({ message: 'Utilize o método: POST' });
     return;
   }
 
