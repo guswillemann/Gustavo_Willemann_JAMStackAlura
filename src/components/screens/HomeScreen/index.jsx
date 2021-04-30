@@ -4,6 +4,7 @@ import Box from '../../foundation/layout/Box';
 import Grid from '../../foundation/layout/Grid';
 import Text from '../../foundation/Text';
 import { WebsitePageContext } from '../../wrappers/WebsitePage';
+import FormRegister from '../../patterns/FormRegister';
 
 export default function HomeScreen() {
   const websitePageContext = React.useContext(WebsitePageContext);
@@ -62,7 +63,7 @@ export default function HomeScreen() {
               }}
               display="block"
               variant="primary.main"
-              onClick={() => websitePageContext.toggleModalCadastro()}
+              onClick={() => websitePageContext.toggleModal(<FormRegister />)}
             >
               Cadastrar
             </Button>

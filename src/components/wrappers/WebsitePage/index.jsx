@@ -1,12 +1,11 @@
 /* eslint-disable react/jsx-props-no-spreading */
-import React from 'react';
+import React, { useState } from 'react';
 import get from 'lodash/get';
 import PropTypes from 'prop-types';
 import Footer from '../../commons/Footer';
 import Menu from '../../commons/Menu';
 import Modal from '../../commons/Modal';
 import Box from '../../foundation/layout/Box';
-import FormRegister from '../../patterns/FormRegister';
 import SEO from '../../commons/SEO';
 
 import { WebsitePageContext } from './context';
@@ -20,16 +19,20 @@ export default function WebsitePageWrapper({
   menuProps,
   messages,
 }) {
-  const [isModalOpen, setModalState] = React.useState(false);
+  const [isModalOpen, setModalOpen] = useState(false);
+  const [modalContent, setModalContent] = useState(null);
 
   return (
     <WebsitePageContext.Provider
       value={{
-        teste: true,
-        toggleModalCadastro: () => {
-          setModalState(!isModalOpen);
+        toggleModal: (modalVariant) => {
+          setModalContent(modalVariant);
+          setModalOpen(!isModalOpen);
         },
         getCMSContent: (cmsKey) => get(messages, cmsKey),
+        modalProps: {
+          'data-modal-safe-area': 'true',
+        },
       }}
     >
       <SEO
@@ -46,16 +49,13 @@ export default function WebsitePageWrapper({
         <Modal
           isOpen={isModalOpen}
           onClose={() => {
-            setModalState(false);
+            setModalOpen(false);
           }}
         >
-          {(propsDoModal) => (
-            <FormRegister propsDoModal={propsDoModal} />
-          )}
+          {modalContent}
         </Modal>
         {menuProps.display && (
           <Menu
-            onRegisterClick={() => setModalState(true)}
             isAppPage={menuProps.isAppPage}
           />
         )}

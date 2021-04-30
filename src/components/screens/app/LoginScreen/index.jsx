@@ -5,6 +5,7 @@ import Box from '../../../foundation/layout/Box';
 import Grid from '../../../foundation/layout/Grid';
 import Text from '../../../foundation/Text';
 import LoginForm from '../../../patterns/FormLogin';
+import FormRegister from '../../../patterns/FormRegister';
 import { WebsitePageContext } from '../../../wrappers/WebsitePage';
 
 export default function LoginScreen() {
@@ -56,7 +57,7 @@ export default function LoginScreen() {
               color="secondary.main"
               onClick={(event) => {
                 event.preventDefault();
-                websitePageContext.toggleModalCadastro();
+                websitePageContext.toggleModal(<FormRegister />);
               }}
             >
               Cadastre-se

@@ -1,11 +1,13 @@
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, { useContext } from 'react';
 import styled from 'styled-components';
 import { Logo } from '../../../theme/Logo';
 import FormSearch from '../../patterns/FormSearch';
+import FormRegister from '../../patterns/FormRegister';
 import Text from '../../foundation/Text';
 import Button from '../Button';
 import MenuWrapper from './styles/MenuWrapper';
+import { WebsitePageContext } from '../../wrappers/WebsitePage/context';
 
 const links = [
   {
@@ -38,7 +40,9 @@ const AvatarImage = styled.img`
   border-radius: 50%;
 `;
 
-export default function Menu({ onRegisterClick, isAppPage }) {
+export default function Menu({ isAppPage }) {
+  const { toggleModal } = useContext(WebsitePageContext);
+
   if (isAppPage) {
     return (
       <MenuWrapper>
@@ -74,7 +78,7 @@ export default function Menu({ onRegisterClick, isAppPage }) {
         <Button ghost variant="secondary.main" href="/app/login">
           Entrar
         </Button>
-        <Button variant="primary.main" onClick={onRegisterClick}>
+        <Button variant="primary.main" onClick={() => toggleModal(<FormRegister />)}>
           Cadastrar
         </Button>
       </MenuWrapper.RightSide>
@@ -83,11 +87,9 @@ export default function Menu({ onRegisterClick, isAppPage }) {
 }
 
 Menu.propTypes = {
-  onRegisterClick: PropTypes.func,
   isAppPage: PropTypes.bool,
 };
 
 Menu.defaultProps = {
-  onRegisterClick: undefined,
   isAppPage: false,
 };
