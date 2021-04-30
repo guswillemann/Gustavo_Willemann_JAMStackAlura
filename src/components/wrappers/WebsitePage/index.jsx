@@ -56,7 +56,7 @@ export default function WebsitePageWrapper({
         </Modal>
         {menuProps.display && (
           <Menu
-            isAppPage={menuProps.isAppPage}
+            variant={menuProps.variant}
           />
         )}
         {children}
@@ -71,7 +71,7 @@ WebsitePageWrapper.defaultProps = {
   pageBoxProps: {},
   menuProps: {
     display: true,
-    isAppPage: false,
+    variant: 'public',
   },
   messages: {},
 };
@@ -82,7 +82,7 @@ WebsitePageWrapper.propTypes = {
   }),
   menuProps: PropTypes.shape({
     display: PropTypes.bool,
-    isAppPage: PropTypes.bool,
+    variant: PropTypes.string,
   }),
   pageBoxProps: PropTypes.shape({
     backgroundImage: PropTypes.string,

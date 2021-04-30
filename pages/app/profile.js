@@ -7,7 +7,7 @@ export default websitePageHOC(ProfileScreen, {
   pageWrapperProps: {
     menuProps: {
       display: true,
-      isAppPage: true,
+      variant: 'app',
     },
   },
 });

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import HttpClient from '../../../infra/http/HttpClient';
+import breakpointsMedia from '../../../theme/utils/breakpointsMedia';
 import Button from '../../commons/Button';
 import TextField from '../../forms/TextField';
 import SearchResults from './components/SearchResults';
@@ -21,6 +22,12 @@ const SearchBtn = styled(Button)`
 
 const FormSearchWrapper = styled.form`
   position: relative;
+  display: none;
+  ${breakpointsMedia({
+    md: {
+      display: 'initial',
+    },
+  })}
 `;
 
 export default function FormSearch() {
