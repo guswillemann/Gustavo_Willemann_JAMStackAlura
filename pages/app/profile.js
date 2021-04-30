@@ -9,6 +9,9 @@ export default websitePageHOC(ProfileScreen, {
       display: true,
       variant: 'app',
     },
+    footerProps: {
+      display: false,
+    },
   },
 });
 
