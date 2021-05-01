@@ -13,10 +13,17 @@ export default async function handler(req, res) {
     return;
   }
 
-  const users = await HttpClient(url, {})
+  const userData = await HttpClient(url, {})
     // eslint-disable-next-line no-underscore-dangle
-    .then((response) => response.data.filter((user) => user._id === req.body.id));
+    .then((response) => response.data.find((user) => user._id === req.body.id));
+  const response = userData
+    ? {
+      username: userData.username,
+      name: userData.name,
+      createdAt: userData.createdAt,
+      updatedAt: userData.updatedAt,
+    }
+    : { message: 'Nenhum usuário encontrado' };
 
-  const responseJson = users.length === 0 ? { message: 'Nenhum usuário encontrado' } : users;
-  res.status(200).json(responseJson);
+  res.status(200).json(response);
 }
