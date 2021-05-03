@@ -42,7 +42,7 @@ function Modal({ isOpen, onClose, children }) {
     <ModalWrapper
       isOpen={isOpen}
       onClick={(event) => {
-        const isSafeArea = event.target.closest('[data-modal-safe-area="true"]');
+        const isSafeArea = event.target.closest('[data-modal-safe-area]');
         if (!isSafeArea) onClose();
       }}
     >
@@ -65,9 +65,7 @@ function Modal({ isOpen, onClose, children }) {
           flex: '1',
         }}
       >
-        {children({
-          'data-modal-safe-area': 'true',
-        })}
+        {children}
       </motion.div>
     </ModalWrapper>
   );
@@ -75,8 +73,12 @@ function Modal({ isOpen, onClose, children }) {
 
 Modal.propTypes = {
   isOpen: PropTypes.bool.isRequired,
-  children: PropTypes.func.isRequired,
+  children: PropTypes.node,
   onClose: PropTypes.func.isRequired,
+};
+
+Modal.defaultProps = {
+  children: null,
 };
 
 export default Modal;

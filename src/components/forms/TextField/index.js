@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import Text from '../../foundation/Text';
 
 const InputWrapper = styled.div`
-  margin-bottom: 17px;
+  ${({ isSearchBox }) => !isSearchBox && 'margin-bottom: 17px'}
 `;
 
 const Input = styled(Text)`
@@ -20,6 +20,7 @@ const Input = styled(Text)`
       font-size: 11px;
       }
   `}
+  ${({ isSearchBox }) => isSearchBox && 'padding-left: 2.7rem'}
 `;
 
 Input.defaultProps = {
@@ -34,12 +35,15 @@ export default function TextField({
   value,
   error,
   isTouched,
+  isSearchBox,
   ...props
 }) {
   const hasError = Boolean(error);
   const isFieldInvalid = hasError && isTouched;
   return (
-    <InputWrapper>
+    <InputWrapper
+      isSearchBox={isSearchBox}
+    >
       <Input
         type="text"
         placeholder={placeholder}
@@ -47,6 +51,7 @@ export default function TextField({
         onChange={onChange}
         value={value}
         isFieldInvalid={isFieldInvalid}
+        isSearchBox={isSearchBox}
         // eslint-disable-next-line react/jsx-props-no-spreading
         {...props}
       />
@@ -66,6 +71,7 @@ export default function TextField({
 TextField.defaultProps = {
   error: undefined,
   isTouched: undefined,
+  isSearchBox: false,
 };
 
 TextField.propTypes = {
@@ -75,4 +81,5 @@ TextField.propTypes = {
   value: PropTypes.string.isRequired,
   error: PropTypes.string,
   isTouched: PropTypes.bool,
+  isSearchBox: PropTypes.bool,
 };

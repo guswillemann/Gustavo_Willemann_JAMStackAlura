@@ -1,8 +1,8 @@
 import styled, { css } from 'styled-components';
-import breakpointsMedia from '../../../../theme/utils/breakpointsMedia';
-import { TextStyleVariantsMap } from '../../../foundation/Text';
+import breakpointsMedia from '../../../../../../theme/utils/breakpointsMedia';
+import { TextStyleVariantsMap } from '../../../../../foundation/Text';
 
-const MenuWrapper = styled.nav`
+const PublicMenuWrapper = styled.nav`
   font-family: 'Rubik', sans-serif;
   display: flex;
   align-items: center;
@@ -30,7 +30,7 @@ const MenuWrapper = styled.nav`
   })}
 `;
 
-MenuWrapper.LeftSide = styled.div`
+PublicMenuWrapper.LeftSide = styled.div`
   padding: 0;
   margin: 0;
   order: 1;
@@ -48,7 +48,7 @@ MenuWrapper.LeftSide = styled.div`
   })}
 `;
 
-MenuWrapper.Central = styled.div`
+PublicMenuWrapper.Central = styled.div`
   padding: 0;
   margin: 0;
   order: 3;
@@ -97,13 +97,14 @@ MenuWrapper.Central = styled.div`
   }
 `;
 
-MenuWrapper.RightSide = styled.div`
+PublicMenuWrapper.RightSide = styled.div`
   padding: 0;
   margin: 0;
   display: flex;
   flex: 1;
   order: 2;
   justify-content: flex-end;
+  align-items: center;
   ${breakpointsMedia({
     md: css`
       order: initial;
@@ -111,4 +112,4 @@ MenuWrapper.RightSide = styled.div`
   })}
 `;
 
-export default MenuWrapper;
+export default PublicMenuWrapper;

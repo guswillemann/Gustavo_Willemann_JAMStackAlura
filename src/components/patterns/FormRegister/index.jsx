@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Lottie } from '@crello/react-lottie';
 import successAnimation from './animations/success.json';
 import errorAnimation from './animations/error.json';
@@ -7,6 +7,7 @@ import TextField from '../../forms/TextField';
 import Box from '../../foundation/layout/Box';
 import Grid from '../../foundation/layout/Grid';
 import Text from '../../foundation/Text';
+import { WebsitePageContext } from '../../wrappers/WebsitePage/context';
 
 const formStates = {
   DEFAULT: 'DEFAULT',
@@ -145,7 +146,9 @@ function FormContent() {
 }
 
 // eslint-disable-next-line react/prop-types
-export default function FormCadastro({ modalProps }) {
+export default function FormCadastro() {
+  const { modalProps } = useContext(WebsitePageContext);
+
   return (
     <Grid.Row
       marginLeft={0}
