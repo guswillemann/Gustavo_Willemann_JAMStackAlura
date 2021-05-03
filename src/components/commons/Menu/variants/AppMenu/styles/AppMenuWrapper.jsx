@@ -7,15 +7,15 @@ const AppMenuWrapper = styled.nav`
   align-items: center;
   justify-content: space-between;
   flex-wrap: wrap;
-  margin-top: 18px;
   padding: 12px 28px;
   border-top-left-radius: ${({ theme }) => theme.borderRadius};
   border-top-right-radius: ${({ theme }) => theme.borderRadius};
   
-  position: absolute;
+  position: fixed;
   right: 0;
   bottom: 0;
   left: 0;
+  z-index: 10;
   
   background-color: ${({ theme }) => theme.colors.background.light.color};
 
@@ -24,11 +24,10 @@ const AppMenuWrapper = styled.nav`
       position: initial;
       border-radius: initial;
       justify-content: flex-start;
-      margin-top: 32px;
       margin-left: auto;
       margin-right: auto;
       width: 100%;
-      padding: 0 16px;
+      padding: 27px 16px;
       max-width: 768px;
     `,
     lg: css`

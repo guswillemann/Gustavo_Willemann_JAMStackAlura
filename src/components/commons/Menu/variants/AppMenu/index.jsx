@@ -1,5 +1,6 @@
-import React from 'react';
-import styled from 'styled-components';
+import React, { useContext } from 'react';
+import styled, { ThemeContext } from 'styled-components';
+import Box from '../../../../foundation/layout/Box';
 import { Logo } from '../../../../../theme/Logo';
 import breakpointsMedia from '../../../../../theme/utils/breakpointsMedia';
 import FormSearch from '../../../../patterns/FormSearch';
@@ -62,6 +63,7 @@ const OpenSearchButton = styled(IconButton)`
 
 const AvatarImage = styled.img`
   order: 5;
+  width: 32px;
   height: 32px;
   border-radius: 50%;
   border: 3px solid ${({ theme }) => theme.colors.primary.main.color};
@@ -73,19 +75,25 @@ const AvatarImage = styled.img`
 `;
 
 export default function AppMenu() {
+  const theme = useContext(ThemeContext);
+
   return (
-    <AppMenuWrapper>
-      <AppMenuWrapper.LeftSide>
-        <Logo />
-      </AppMenuWrapper.LeftSide>
-      <AppMenuWrapper.RightSide>
-        <FormSearch />
-        <PostButton><img src="/icons/postIcon.svg" alt="Post" /></PostButton>
-        <OpenSearchButton><img src="/icons/search.svg" alt="Abrir pesquisa" /></OpenSearchButton>
-        <HomeButton><img src="/icons/home.svg" alt="Home" /></HomeButton>
-        <HeartButton><img src="/icons/heart.svg" alt="Like" /></HeartButton>
-        <AvatarImage src="http://placehold.it/50x50" alt="Avatar" />
-      </AppMenuWrapper.RightSide>
-    </AppMenuWrapper>
+    <Box
+      backgroundColor={theme.colors.background.light.color}
+    >
+      <AppMenuWrapper>
+        <AppMenuWrapper.LeftSide>
+          <Logo />
+        </AppMenuWrapper.LeftSide>
+        <AppMenuWrapper.RightSide>
+          <FormSearch />
+          <PostButton><img src="/icons/postIcon.svg" alt="Post" /></PostButton>
+          <OpenSearchButton><img src="/icons/search.svg" alt="Abrir pesquisa" /></OpenSearchButton>
+          <HomeButton><img src="/icons/home.svg" alt="Home" /></HomeButton>
+          <HeartButton><img src="/icons/heart.svg" alt="Like" /></HeartButton>
+          <AvatarImage src="https://picsum.photos/200" alt="Avatar" />
+        </AppMenuWrapper.RightSide>
+      </AppMenuWrapper>
+    </Box>
   );
 }

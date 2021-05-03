@@ -41,8 +41,8 @@ export default function FormSearch() {
   const hasSearchResult = searchResult.length !== 0;
   const isValidForm = Boolean(searchArg);
 
-  function sendSearchRequest() {
-    HttpClient('/api/search', {
+  async function sendSearchRequest() {
+    await HttpClient('/api/search', {
       method: 'POST',
       body: {
         searchArg,

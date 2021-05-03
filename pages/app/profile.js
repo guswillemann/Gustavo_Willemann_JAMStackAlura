@@ -10,7 +10,10 @@ export default websitePageHOC(ProfileScreen, {
       variant: 'app',
     },
     footerProps: {
-      display: false,
+      display: true,
+    },
+    pageBoxProps: {
+      backgroundColor: 'colors.background.main.color',
     },
   },
 });
@@ -20,19 +23,15 @@ export async function getServerSideProps(ctx) {
   const hasActiveSession = await auth.hasActiveSession();
 
   if (hasActiveSession) {
-    const session = await auth.getSession();
-    const profilePage = await userService.getProfilePage(ctx);
+    const { user, posts } = await userService.getProfilePage(ctx);
 
     return {
       props: {
-        user: {
-          ...session,
-          ...profilePage.user,
-        },
-        posts: profilePage.posts,
+        user,
+        posts,
         pageWrapperProps: {
           seoProps: {
-            headTitle: session.username,
+            headTitle: user.username,
           },
         },
       },

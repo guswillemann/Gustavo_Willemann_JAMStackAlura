@@ -1,5 +1,5 @@
 /* eslint-disable react/jsx-props-no-spreading */
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import get from 'lodash/get';
 import PropTypes from 'prop-types';
 import Footer from '../../commons/Footer';
@@ -9,6 +9,7 @@ import Box from '../../foundation/layout/Box';
 import SEO from '../../commons/SEO';
 
 import { WebsitePageContext } from './context';
+import { ThemeContext } from 'styled-components';
 
 export { WebsitePageContext } from './context';
 
@@ -20,6 +21,10 @@ export default function WebsitePageWrapper({
   footerProps,
   messages,
 }) {
+  const theme = useContext(ThemeContext);
+  
+  const { backgroundColor, ...remainingPageBoxProps } = pageBoxProps;
+
   const [isModalOpen, setModalOpen] = useState(false);
   const [modalContent, setModalContent] = useState(null);
 
@@ -45,7 +50,8 @@ export default function WebsitePageWrapper({
         flex="1"
         flexDirection="column"
         justifyContent="space-between"
-        {...pageBoxProps}
+        backgroundColor={get(theme, backgroundColor)}
+        {...remainingPageBoxProps}
       >
         <Modal
           isOpen={isModalOpen}
