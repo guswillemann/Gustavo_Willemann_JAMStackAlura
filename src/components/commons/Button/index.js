@@ -82,3 +82,13 @@ Button.propTypes = {
   href: PropTypes.string,
   children: PropTypes.node.isRequired,
 };
+
+export const IconButton = styled(Button)`
+  padding: 0;
+  font-size: 0;
+  background-color: transparent;
+
+  img {
+    height: 32px;
+  }
+`;
