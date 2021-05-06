@@ -11,7 +11,7 @@ const PostImageWrapper = styled.figure`
 
   background-color: #d4d4d4;
   
-  &::after {
+  &::before {
     content: '';
     position: absolute;
     inset: 0;
@@ -21,7 +21,6 @@ const PostImageWrapper = styled.figure`
     background-position: center;
     
     opacity: 0.1;
-    z-index: 1;
   }
 
   img {
@@ -30,8 +29,6 @@ const PostImageWrapper = styled.figure`
     width: 100%;
     height: 100%;
     object-fit: cover;
-    
-    z-index: 2;
   }
 `;
 
