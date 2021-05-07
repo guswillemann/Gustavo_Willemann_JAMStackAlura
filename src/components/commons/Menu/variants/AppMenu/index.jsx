@@ -6,7 +6,7 @@ import breakpointsMedia from '../../../../../theme/utils/breakpointsMedia';
 import FormSearch from '../../../../patterns/FormSearch';
 import { IconButton } from '../../../Button';
 import AppMenuWrapper from './styles/AppMenuWrapper';
-import { WebsitePageContext } from '../../../../wrappers/WebsitePage/context';
+import useWebsitePageContext from '../../../../wrappers/WebsitePage/context';
 import NewPostWindow from '../../../../patterns/NewPostWindow';
 
 const PostButton = styled(IconButton)`
@@ -70,7 +70,7 @@ const AvatarImage = styled.img`
 
 export default function AppMenu() {
   const theme = useContext(ThemeContext);
-  const { toggleModal } = useContext(WebsitePageContext);
+  const { toggleModal } = useWebsitePageContext();
 
   return (
     <Box

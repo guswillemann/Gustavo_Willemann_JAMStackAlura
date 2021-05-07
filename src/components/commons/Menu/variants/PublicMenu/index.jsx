@@ -1,7 +1,7 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { Logo } from '../../../../../theme/Logo';
 import Text from '../../../../foundation/Text';
-import { WebsitePageContext } from '../../../../wrappers/WebsitePage/context';
+import useWebsitePageContext from '../../../../wrappers/WebsitePage/context';
 import Button from '../../../Button';
 import PublicMenuWrapper from './styles/PublicMenuWrapper';
 import FormRegister from '../../../../patterns/FormRegister';
@@ -22,7 +22,7 @@ const links = [
 ];
 
 export default function PublicMenu() {
-  const { toggleModal } = useContext(WebsitePageContext);
+  const { toggleModal } = useWebsitePageContext();
 
   return (
     <PublicMenuWrapper>

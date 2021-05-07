@@ -1,9 +1,9 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
-import React, { useContext, useState } from 'react';
+import React, { useState } from 'react';
 import Head from 'next/head';
 import styled from 'styled-components';
 import Button, { IconButton } from '../../commons/Button';
-import { WebsitePageContext } from '../../wrappers/WebsitePage/context';
+import useWebsitePageContext from '../../wrappers/WebsitePage/context';
 import Box from '../../foundation/layout/Box';
 import PostImage from '../../commons/PostImage';
 
@@ -25,7 +25,7 @@ const CloseButton = styled(IconButton)`
 `;
 
 export default function NewPostWindow() {
-  const { modalProps, toggleModal } = useContext(WebsitePageContext);
+  const { modalProps, toggleModal } = useWebsitePageContext();
 
   const [imgSrc, setImgSrc] = useState('');
   const [urlString, setUrlString] = useState('');

@@ -6,10 +6,10 @@ import Grid from '../../../foundation/layout/Grid';
 import Text from '../../../foundation/Text';
 import LoginForm from '../../../patterns/FormLogin';
 import FormRegister from '../../../patterns/FormRegister';
-import { WebsitePageContext } from '../../../wrappers/WebsitePage';
+import useWebsitePageContext from '../../../wrappers/WebsitePage/context';
 
 export default function LoginScreen() {
-  const websitePageContext = React.useContext(WebsitePageContext);
+  const websitePageContext = useWebsitePageContext;
 
   return (
     <Grid.Container
