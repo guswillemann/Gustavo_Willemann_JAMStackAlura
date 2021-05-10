@@ -50,6 +50,26 @@ const userService = {
       throw new Error('Não conseguimos pegar os posts');
     }
   },
+  async sendNewPost({ photoUrl, description, filter }) {
+    const url = `${EXTERNAL_URL}/api/posts`;
+    try {
+      const token = await authService().getToken();
+      const response = await HttpClient(url, {
+        method: 'POST',
+        headers: {
+          authorization: `Bearer ${token}`,
+        },
+        body: {
+          photoUrl,
+          description,
+          filter,
+        },
+      });
+      return response.data;
+    } catch {
+      throw new Error('Falha na criação do post.');
+    }
+  },
 };
 
 export default userService;

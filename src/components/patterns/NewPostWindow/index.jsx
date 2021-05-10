@@ -10,6 +10,7 @@ import PostImage from '../../commons/PostImage';
 import NewPostWrapper from './NewPostWrapper';
 import ImageUrlForm from './ImageUrlForm';
 import FilterOptions from './FilterOptions';
+import userService from '../../../services/user/userService';
 
 const BackButton = styled(IconButton)`
   position: absolute;
@@ -25,7 +26,11 @@ const CloseButton = styled(IconButton)`
 `;
 
 export default function NewPostWindow() {
-  const { modalProps, toggleModal } = useWebsitePageContext();
+  const {
+    modalProps,
+    toggleModal,
+    setNewPost,
+  } = useWebsitePageContext();
 
   const [imgSrc, setImgSrc] = useState('');
   const [urlString, setUrlString] = useState('');
@@ -34,8 +39,13 @@ export default function NewPostWindow() {
 
   const isDisabled = !imgSrc || (isSelectingFilter && filterClass === undefined);
 
-  function completeNewPost() {
-    console.log(`Imagem postada. Filtro: ${filterClass}`);
+  async function completeNewPost() {
+    await userService.sendNewPost({
+      photoUrl: urlString,
+      description: 'Post Description',
+      filter: filterClass,
+    })
+      .then((post) => setNewPost(post));
   }
 
   function handleClick() {

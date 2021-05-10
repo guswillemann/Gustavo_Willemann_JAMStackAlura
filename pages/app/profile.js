@@ -24,7 +24,6 @@ export async function getServerSideProps(ctx) {
 
   if (hasActiveSession) {
     const { user, posts } = await userService.getProfilePage(ctx);
-
     return {
       props: {
         user,

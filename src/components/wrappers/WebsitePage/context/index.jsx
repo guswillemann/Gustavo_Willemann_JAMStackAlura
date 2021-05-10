@@ -7,6 +7,7 @@ const WebsitePageContext = React.createContext();
 export function WebsitePageContextProvider({ children, messages }) {
   const [isModalOpen, setModalOpen] = useState(false);
   const [modalContent, setModalContent] = useState(null);
+  const [newPost, setNewPost] = useState(null);
 
   const modalProps = {
     'data-modal-safe-area': 'true',
@@ -30,6 +31,8 @@ export function WebsitePageContextProvider({ children, messages }) {
         modalProps,
         modalContent,
         isModalOpen,
+        // eslint-disable-next-line object-property-newline
+        newPost, setNewPost,
       }}
     >
       {children}
