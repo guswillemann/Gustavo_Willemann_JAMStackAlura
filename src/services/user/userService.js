@@ -17,7 +17,7 @@ const userService = {
 
     return {
       user,
-      posts,
+      posts: posts.reverse(),
     };
   },
   async getUserData(ctx) {
