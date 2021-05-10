@@ -4,23 +4,9 @@ import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import Grid from '../../../foundation/layout/Grid';
 import Button from '../../../commons/Button';
+import PostImage from '../../../commons/PostImage';
 import Text from '../../../foundation/Text';
 import breakpointsMedia from '../../../../theme/utils/breakpointsMedia';
-
-const PostImage = styled.img`
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-
-  position: absolute;
-  top: 0;
-  left: 0;
-  padding: 4px;
-  
-  ${breakpointsMedia({
-    lg: { padding: '16px' },
-  })}
-`;
 
 const UserCard = styled.section`
   display: flex;
@@ -71,16 +57,15 @@ const UserCard = styled.section`
 const PostCard = styled(Grid.Column)`
   position: relative;
   font-size: 0;
-  // padding: 16px;
-
-
-  &::before {
-    // element to ensure the PostCard will have a 1:1 ratio
-    content: '';
-    font-size: 0;
-    float: left;
-    padding-top: 100%;
-  }
+  margin-bottom: 8px;
+  padding: 0 4px;
+  
+  ${breakpointsMedia({
+    lg: {
+      marginBottom: '32px',
+      padding: '0 16px',
+    },
+  })}
 `;
 
 const PostLikeButton = styled(Button)`
@@ -159,7 +144,11 @@ export default function ProfileScreen({ user, posts }) {
             // eslint-disable-next-line no-underscore-dangle
             key={post._id}
           >
-            <PostImage loading="lazy" src={post.photoUrl} alt="Imagem do post" />
+            <PostImage
+              imgSrc={post.photoUrl}
+              filterClass={post.filter}
+              alt="Imagem do post"
+            />
             <PostLikeButton>
               <img src="/icons/heart.svg" alt="Heart post" />
               <Text

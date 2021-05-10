@@ -1,6 +1,5 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import React, { useState } from 'react';
-import Head from 'next/head';
 import styled from 'styled-components';
 import Button, { IconButton } from '../../commons/Button';
 import useWebsitePageContext from '../../wrappers/WebsitePage/context';
@@ -64,9 +63,6 @@ export default function NewPostWindow() {
       justifyContent="space-around"
       flex="1"
     >
-      <Head>
-        <link rel="stylesheet" href="/instagram.min.css" />
-      </Head>
       <NewPostWrapper
         // eslint-disable-next-line react/jsx-props-no-spreading
         {...modalProps}
