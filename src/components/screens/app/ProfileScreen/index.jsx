@@ -1,5 +1,5 @@
 /* eslint-disable indent */
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import Grid from '../../../foundation/layout/Grid';
@@ -7,6 +7,7 @@ import Button from '../../../commons/Button';
 import PostImage from '../../../commons/PostImage';
 import Text from '../../../foundation/Text';
 import breakpointsMedia from '../../../../theme/utils/breakpointsMedia';
+import useWebsitePageContext from '../../../wrappers/WebsitePage/context';
 
 const UserCard = styled.section`
   display: flex;
@@ -59,7 +60,7 @@ const PostCard = styled(Grid.Column)`
   font-size: 0;
   margin-bottom: 8px;
   padding: 0 4px;
-  
+
   ${breakpointsMedia({
     lg: {
       marginBottom: '32px',
@@ -87,6 +88,16 @@ const PostLikeButton = styled(Button)`
 `;
 
 export default function ProfileScreen({ user, posts }) {
+  const { newPost } = useWebsitePageContext();
+  const [postList, setPostList] = useState(posts);
+
+  useEffect(() => {
+    if (!newPost) return undefined;
+    // eslint-disable-next-line no-underscore-dangle
+    if (newPost._id !== postList[0]._id) setPostList([newPost, ...postList]);
+    return undefined;
+  }, [newPost]);
+
   return (
     <Grid.Container
       flex={1}
@@ -109,7 +120,7 @@ export default function ProfileScreen({ user, posts }) {
                 tag="h2"
                 variant="titleXS"
               >
-                {posts.length}
+                {postList.length}
               </Text>
               <Text
                 tag="p"
@@ -134,7 +145,7 @@ export default function ProfileScreen({ user, posts }) {
       <Grid.Row
         as="section"
       >
-        {posts.map((post, index) => (
+        {postList.map((post, index) => (
           <PostCard
             value={{ xs: 4, md: 3 }}
             offset={{
