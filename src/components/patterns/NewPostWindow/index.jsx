@@ -1,5 +1,5 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import Button, { IconButton } from '../../commons/Button';
 import useWebsitePageContext from '../../wrappers/WebsitePage/context';
@@ -24,6 +24,13 @@ const CloseButton = styled(IconButton)`
   right: 12px;
 `;
 
+const NewPostWindowStates = {
+  default: 'default',
+  imgLoaded: 'imgLoaded',
+  selectingFilter: 'selectingFilter',
+  posting: 'posting',
+};
+
 export default function NewPostWindow() {
   const {
     modalProps,
@@ -31,29 +38,53 @@ export default function NewPostWindow() {
     setNewPost,
   } = useWebsitePageContext();
 
+  const [newPostWindowState, setNewPostWindowState] = useState(NewPostWindowStates.default);
   const [imgSrc, setImgSrc] = useState('');
   const [urlString, setUrlString] = useState('');
-  const [isSelectingFilter, setIsSelectingFilter] = useState(false);
   const [filterClass, setFilterClass] = useState(undefined);
 
-  const isDisabled = !imgSrc || (isSelectingFilter && filterClass === undefined);
+  useEffect(() => {
+    if (imgSrc === '') setNewPostWindowState(NewPostWindowStates.default);
+    else setNewPostWindowState(NewPostWindowStates.imgLoaded);
+  }, [imgSrc]);
+
+  const isDisabled = (newPostWindowState === NewPostWindowStates.default)
+    || (newPostWindowState === NewPostWindowStates.isSelectingFilter && filterClass === undefined)
+    || (newPostWindowState === NewPostWindowStates.posting);
+
+  function resetPostWindow() {
+    setNewPostWindowState(NewPostWindowStates.default);
+    setImgSrc('');
+    setUrlString('');
+    setFilterClass(undefined);
+    toggleModal();
+  }
 
   async function completeNewPost() {
+    setNewPostWindowState(NewPostWindowStates.posting);
     await userService.sendNewPost({
       photoUrl: urlString,
       description: 'Post Description',
       filter: filterClass,
     })
-      .then((post) => setNewPost(post));
+      .then((post) => {
+        setNewPost(post);
+        resetPostWindow();
+      })
+      .catch(() => {
+        // eslint-disable-next-line no-alert
+        alert('Falha na criação do post.');
+        setNewPostWindowState(NewPostWindowStates.selectingFilter);
+      });
   }
 
   function handleClick() {
-    if (isSelectingFilter) completeNewPost();
-    else setIsSelectingFilter(true);
+    if (newPostWindowState === NewPostWindowStates.selectingFilter) completeNewPost();
+    else setNewPostWindowState(NewPostWindowStates.selectingFilter);
   }
 
   function onBack() {
-    setIsSelectingFilter(false);
+    setNewPostWindowState(NewPostWindowStates.imgLoaded);
     setFilterClass(undefined);
   }
 
@@ -67,12 +98,20 @@ export default function NewPostWindow() {
         // eslint-disable-next-line react/jsx-props-no-spreading
         {...modalProps}
       >
-        {isSelectingFilter && <BackButton type="button" onClick={onBack}><img src="/icons/arrow-right-dark.svg" alt="Voltar" /></BackButton>}
-        <CloseButton type="button" onClick={() => toggleModal()}><img src="/icons/xIcon.svg" alt="Fechar" /></CloseButton>
+        {newPostWindowState === NewPostWindowStates.selectingFilter && (
+          <BackButton type="button" onClick={onBack}>
+            <img src="/icons/arrow-right-dark.svg" alt="Voltar" />
+          </BackButton>
+        )}
+
+        <CloseButton type="button" onClick={() => toggleModal()}>
+          <img src="/icons/xIcon.svg" alt="Fechar" />
+        </CloseButton>
 
         <PostImage imgSrc={imgSrc} filterClass={filterClass} alt="Imagem escolhida" />
 
-        {isSelectingFilter
+        {(newPostWindowState === NewPostWindowStates.selectingFilter
+          || newPostWindowState === NewPostWindowStates.posting)
           ? (
             <FilterOptions
               imgSrc={imgSrc}
@@ -97,7 +136,7 @@ export default function NewPostWindow() {
             disabled={isDisabled}
             type="button"
           >
-            {isSelectingFilter ? 'Postar' : 'Avançar'}
+            {newPostWindowState === NewPostWindowStates.selectingFilter ? 'Postar' : 'Avançar'}
           </Button>
         </Box>
       </NewPostWrapper>
