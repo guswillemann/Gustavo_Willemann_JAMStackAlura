@@ -4,25 +4,10 @@ import Box from '../../../../foundation/layout/Box';
 import { Logo } from '../../../../../theme/Logo';
 import breakpointsMedia from '../../../../../theme/utils/breakpointsMedia';
 import FormSearch from '../../../../patterns/FormSearch';
-import Button from '../../../Button';
+import { IconButton } from '../../../Button';
 import AppMenuWrapper from './styles/AppMenuWrapper';
-
-const IconButton = styled(Button)`
-  padding: 0;
-  font-size: 0;
-  background-color: transparent;
-  
-  ${breakpointsMedia({
-    md: {
-      marginLeft: '32px',
-    },
-  })}
-  
-
-  img {
-    height: 32px;
-  }
-`;
+import useWebsitePageContext from '../../../../wrappers/WebsitePage/context';
+import NewPostWindow from '../../../../patterns/NewPostWindow';
 
 const PostButton = styled(IconButton)`
   order: 3;
@@ -31,10 +16,11 @@ const PostButton = styled(IconButton)`
     height: 40px;
   }
 
-    ${breakpointsMedia({
+  ${breakpointsMedia({
     md: {
       order: '1',
       img: { height: '32px' },
+      marginLeft: '32px',
     },
   })}
 `;
@@ -44,12 +30,19 @@ const HomeButton = styled(IconButton)`
   ${breakpointsMedia({
     md: {
       order: '2',
+      marginLeft: '32px',
     },
   })}
 `;
 
 const HeartButton = styled(IconButton)`
   order: 4;
+
+  ${breakpointsMedia({
+    md: {
+      marginLeft: '32px',
+    },
+  })}
 `;
 
 const OpenSearchButton = styled(IconButton)`
@@ -57,6 +50,7 @@ const OpenSearchButton = styled(IconButton)`
   ${breakpointsMedia({
     md: {
       display: 'none',
+      marginLeft: '32px',
     },
   })}
 `;
@@ -76,6 +70,7 @@ const AvatarImage = styled.img`
 
 export default function AppMenu() {
   const theme = useContext(ThemeContext);
+  const { toggleModal } = useWebsitePageContext();
 
   return (
     <Box
@@ -87,7 +82,11 @@ export default function AppMenu() {
         </AppMenuWrapper.LeftSide>
         <AppMenuWrapper.RightSide>
           <FormSearch />
-          <PostButton><img src="/icons/postIcon.svg" alt="Post" /></PostButton>
+          <PostButton
+            onClick={() => toggleModal(<NewPostWindow />)}
+          >
+            <img src="/icons/postIcon.svg" alt="Post" />
+          </PostButton>
           <OpenSearchButton><img src="/icons/search.svg" alt="Abrir pesquisa" /></OpenSearchButton>
           <HomeButton><img src="/icons/home.svg" alt="Home" /></HomeButton>
           <HeartButton><img src="/icons/heart.svg" alt="Like" /></HeartButton>

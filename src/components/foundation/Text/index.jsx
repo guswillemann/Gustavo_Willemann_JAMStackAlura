@@ -5,7 +5,7 @@ import styled, { css } from 'styled-components';
 import propToStyle from '../../../theme/utils/propToStyle';
 import breakpointsMedia from '../../../theme/utils/breakpointsMedia';
 import Link from '../../commons/Link';
-import { WebsitePageContext } from '../../wrappers/WebsitePage/context';
+import useWebsitePageContext from '../../wrappers/WebsitePage/context';
 
 export const TextStyleVariantsMap = {
   paragraph1: css`
@@ -62,7 +62,7 @@ export default function Text({
   cmsKey,
   ...props
 }) {
-  const websitePageContext = React.useContext(WebsitePageContext);
+  const websitePageContext = useWebsitePageContext();
 
   const componentContent = cmsKey
     ? websitePageContext.getCMSContent(cmsKey)

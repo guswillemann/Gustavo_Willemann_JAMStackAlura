@@ -1,26 +1,13 @@
 /* eslint-disable indent */
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import Grid from '../../../foundation/layout/Grid';
 import Button from '../../../commons/Button';
+import PostImage from '../../../commons/PostImage';
 import Text from '../../../foundation/Text';
 import breakpointsMedia from '../../../../theme/utils/breakpointsMedia';
-
-const PostImage = styled.img`
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-
-  position: absolute;
-  top: 0;
-  left: 0;
-  padding: 4px;
-  
-  ${breakpointsMedia({
-    lg: { padding: '16px' },
-  })}
-`;
+import useWebsitePageContext from '../../../wrappers/WebsitePage/context';
 
 const UserCard = styled.section`
   display: flex;
@@ -71,16 +58,15 @@ const UserCard = styled.section`
 const PostCard = styled(Grid.Column)`
   position: relative;
   font-size: 0;
-  // padding: 16px;
+  margin-bottom: 8px;
+  padding: 0 4px;
 
-
-  &::before {
-    // element to ensure the PostCard will have a 1:1 ratio
-    content: '';
-    font-size: 0;
-    float: left;
-    padding-top: 100%;
-  }
+  ${breakpointsMedia({
+    lg: {
+      marginBottom: '32px',
+      padding: '0 16px',
+    },
+  })}
 `;
 
 const PostLikeButton = styled(Button)`
@@ -102,6 +88,16 @@ const PostLikeButton = styled(Button)`
 `;
 
 export default function ProfileScreen({ user, posts }) {
+  const { newPost } = useWebsitePageContext();
+  const [postList, setPostList] = useState(posts);
+
+  useEffect(() => {
+    if (!newPost) return undefined;
+    // eslint-disable-next-line no-underscore-dangle
+    if (newPost._id !== postList[0]._id) setPostList([newPost, ...postList]);
+    return undefined;
+  }, [newPost]);
+
   return (
     <Grid.Container
       flex={1}
@@ -124,7 +120,7 @@ export default function ProfileScreen({ user, posts }) {
                 tag="h2"
                 variant="titleXS"
               >
-                {posts.length}
+                {postList.length}
               </Text>
               <Text
                 tag="p"
@@ -149,7 +145,7 @@ export default function ProfileScreen({ user, posts }) {
       <Grid.Row
         as="section"
       >
-        {posts.map((post, index) => (
+        {postList.map((post, index) => (
           <PostCard
             value={{ xs: 4, md: 3 }}
             offset={{
@@ -159,7 +155,11 @@ export default function ProfileScreen({ user, posts }) {
             // eslint-disable-next-line no-underscore-dangle
             key={post._id}
           >
-            <PostImage loading="lazy" src={post.photoUrl} alt="Imagem do post" />
+            <PostImage
+              imgSrc={post.photoUrl}
+              filterClass={post.filter}
+              alt="Imagem do post"
+            />
             <PostLikeButton>
               <img src="/icons/heart.svg" alt="Heart post" />
               <Text

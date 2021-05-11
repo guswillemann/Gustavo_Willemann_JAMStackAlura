@@ -3,11 +3,11 @@ import Button from '../../commons/Button';
 import Box from '../../foundation/layout/Box';
 import Grid from '../../foundation/layout/Grid';
 import Text from '../../foundation/Text';
-import { WebsitePageContext } from '../../wrappers/WebsitePage';
 import FormRegister from '../../patterns/FormRegister';
+import useWebsitePageContext from '../../wrappers/WebsitePage/context';
 
 export default function HomeScreen() {
-  const websitePageContext = React.useContext(WebsitePageContext);
+  const websitePageContext = useWebsitePageContext();
 
   return (
     <Box

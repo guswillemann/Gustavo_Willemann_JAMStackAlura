@@ -1,7 +1,7 @@
 import React from 'react';
 import styled, { createGlobalStyle, css } from 'styled-components';
-import PropTypes from 'prop-types';
 import { motion } from 'framer-motion';
+import useWebsitePageContext from '../../wrappers/WebsitePage/context';
 
 const ModalWrapper = styled.div`
   display: flex;
@@ -37,17 +37,23 @@ const LockScroll = createGlobalStyle`
   }
 `;
 
-function Modal({ isOpen, onClose, children }) {
+export default function Modal() {
+  const {
+    toggleModal,
+    modalContent,
+    isModalOpen,
+  } = useWebsitePageContext();
+
   return (
     <ModalWrapper
-      isOpen={isOpen}
+      isOpen={isModalOpen}
       onClick={(event) => {
         const isSafeArea = event.target.closest('[data-modal-safe-area]');
-        if (!isSafeArea) onClose();
+        if (!isSafeArea) toggleModal();
       }}
     >
 
-      {isOpen && <LockScroll />}
+      {isModalOpen && <LockScroll />}
 
       <motion.div
         variants={{
@@ -58,27 +64,15 @@ function Modal({ isOpen, onClose, children }) {
             x: '100%',
           },
         }}
-        animate={isOpen ? 'open' : 'closed'}
+        animate={isModalOpen ? 'open' : 'closed'}
         transition="500ms"
         style={{
           display: 'flex',
           flex: '1',
         }}
       >
-        {children}
+        {modalContent}
       </motion.div>
     </ModalWrapper>
   );
 }
-
-Modal.propTypes = {
-  isOpen: PropTypes.bool.isRequired,
-  children: PropTypes.node,
-  onClose: PropTypes.func.isRequired,
-};
-
-Modal.defaultProps = {
-  children: null,
-};
-
-export default Modal;
