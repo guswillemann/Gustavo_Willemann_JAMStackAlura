@@ -1,5 +1,5 @@
-import React from 'react';
-import styled from 'styled-components';
+import React, { useState } from 'react';
+import styled, { css } from 'styled-components';
 import PropTypes from 'prop-types';
 
 const PostImageWrapper = styled.figure`
@@ -9,19 +9,21 @@ const PostImageWrapper = styled.figure`
   margin: 0;
   font-size: 0;
 
-  background-color: #d4d4d4;
-  
-  &::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-
-    background-image: url('/icons/imgPlaceholder.svg');
-    background-repeat: no-repeat;
-    background-position: center;
+  ${({ isPlaceholder }) => isPlaceholder && css`
+    background-color: #d4d4d4;
     
-    opacity: 0.1;
-  }
+    &::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+
+      background-image: url('/icons/imgPlaceholder.svg');
+      background-repeat: no-repeat;
+      background-position: center;
+      
+      opacity: 0.1;
+    }
+  `}
 
   img {
     position: absolute;
@@ -35,15 +37,17 @@ const PostImageWrapper = styled.figure`
 export default function PostImage({
   imgSrc, filterClass, alt, width,
 }) {
+  const [hasLoaded, setHasLoaded] = useState(false);
+
   const hasImgSrc = imgSrc !== '';
 
   return (
     <PostImageWrapper
-      className={filterClass}
+      className={hasLoaded && filterClass}
       width={width}
-      isPlaceholder={!hasImgSrc}
+      isPlaceholder={!hasImgSrc || !hasLoaded}
     >
-      {hasImgSrc && <img src={imgSrc} alt={alt} loading="lazy" />}
+      {hasImgSrc && <img src={imgSrc} alt={alt} loading="lazy" onLoad={() => setHasLoaded(true)} />}
     </PostImageWrapper>
   );
 }
