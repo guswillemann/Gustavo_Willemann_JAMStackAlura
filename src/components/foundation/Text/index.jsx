@@ -63,7 +63,7 @@ export default function Text({
 Text.propTypes = {
   tag: PropTypes.string,
   href: PropTypes.string,
-  variant: PropTypes.string,
+  variant: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
   children: PropTypes.node,
   cmsKey: PropTypes.string,
 };
