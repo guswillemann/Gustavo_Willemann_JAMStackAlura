@@ -22,6 +22,9 @@ export default async function handler(req, res) {
       name: userData.name,
       createdAt: userData.createdAt,
       updatedAt: userData.updatedAt,
+      avatar: 'https://picsum.photos/200', // placeholder
+      followers: Math.floor(Math.random() * 1000000), // placeholder value
+      following: Math.floor(Math.random() * 1000), // placeholder value
     }
     : { message: 'Nenhum usuário encontrado' };
 

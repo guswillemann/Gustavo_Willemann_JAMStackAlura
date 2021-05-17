@@ -8,52 +8,7 @@ import PostImage from '../../../commons/PostImage';
 import Text from '../../../foundation/Text';
 import breakpointsMedia from '../../../../theme/utils/breakpointsMedia';
 import useWebsitePageContext from '../../../wrappers/WebsitePage/context';
-
-const UserCard = styled.section`
-  display: flex;
-  margin: 16px 0;
-  align-items: center;
-
-  ${breakpointsMedia({
-    md: {
-      margin: '64px 0',
-    },
-  })}
-
-  img {
-    border-radius: 50%;
-    width: 100px;
-    height: 100px;
-    object-fit: contain;
-
-    ${breakpointsMedia({
-      sm: {
-        width: '125px',
-        height: '125px',
-      },
-      md: {
-        width: '150px',
-        height: '150px',
-      },
-      lg: {
-        width: '200px',
-        height: '200px',
-      },
-    })}
-  }
-  
-  div {
-    margin-left: 4rem;
-  }
-
-  h2 {
-    margin-bottom: 0;
-  }
-
-  p {
-    margin-top: 0;
-  }
-`;
+import UserCard from './UserCard';
 
 const PostCard = styled(Grid.Column)`
   position: relative;
@@ -106,40 +61,27 @@ export default function ProfileScreen({ user, posts }) {
         <Grid.Column
           value={{
             xs: 12,
+            sm: 8,
             md: 9,
+            lg: 7,
           }}
           offset={{
             xs: 0,
-            md: 3,
+            sm: 2,
+            md: 1.5,
+            lg: 2.5,
           }}
         >
-          <UserCard>
-            <img src="https://picsum.photos/200" alt="Avatar" />
-            <div>
-              <Text
-                tag="h2"
-                variant="titleXS"
-              >
-                {postList.length}
-              </Text>
-              <Text
-                tag="p"
-              >
-                Publicações
-              </Text>
-              <Text
-                tag="h2"
-                variant="titleXS"
-              >
-                {user.name}
-              </Text>
-              <Text
-                tag="p"
-              >
-                {user.username}
-              </Text>
-            </div>
-          </UserCard>
+          <UserCard
+            user={{
+              name: user.name,
+              username: user.username,
+              avatar: user.avatar,
+              followers: user.followers,
+              following: user.following,
+            }}
+            numberOfPosts={posts.length}
+          />
         </Grid.Column>
       </Grid.Row>
       <Grid.Row
@@ -189,14 +131,18 @@ ProfileScreen.propTypes = {
       createdAt: PropTypes.string,
       updatedAt: PropTypes.string,
       __v: PropTypes.number,
-    }).isRequired,
+    }),
   ).isRequired,
+
   user: PropTypes.shape({
     id: PropTypes.string,
-    name: PropTypes.string,
-    username: PropTypes.string,
+    name: PropTypes.string.isRequired,
+    username: PropTypes.string.isRequired,
+    avatar: PropTypes.string.isRequired,
     role: PropTypes.arrayOf(PropTypes.string),
     createdAt: PropTypes.string,
     updatedAt: PropTypes.string,
+    followers: PropTypes.number.isRequired,
+    following: PropTypes.number.isRequired,
   }).isRequired,
 };
