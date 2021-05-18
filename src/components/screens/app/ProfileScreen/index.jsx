@@ -4,13 +4,11 @@ import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import Grid from '../../../foundation/layout/Grid';
-import Button from '../../../commons/Button';
 import PostImage from '../../../commons/PostImage';
-import Text from '../../../foundation/Text';
 import breakpointsMedia from '../../../../theme/utils/breakpointsMedia';
 import useWebsitePageContext from '../../../wrappers/WebsitePage/context';
 import UserCard from './UserCard';
-import userService from '../../../../services/user/userService';
+import PostLikeButton from './PostLikeButton';
 
 const PostCard = styled(Grid.Column)`
   position: relative;
@@ -24,24 +22,6 @@ const PostCard = styled(Grid.Column)`
       padding: '0 16px',
     },
   })}
-`;
-
-const PostLikeButton = styled(Button)`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  opacity: 0;
-  border-radius: 0;
-  color: initial;
-  transition: 400ms;
-
-  &:hover, &:focus {
-    opacity: 0.75;
-  }
 `;
 
 export default function ProfileScreen({ user, posts }) {
@@ -103,29 +83,12 @@ export default function ProfileScreen({ user, posts }) {
               alt="Imagem do post"
             />
             <PostLikeButton
-              type="button"
-              onClick={async () => {
-                const tempPostList = [...postList];
-                const updatedPost = await userService.likePost(post._id);
-                if (updatedPost !== undefined) {
-                  tempPostList[index].likes = updatedPost.likes;
-                  setPostList(tempPostList);
-                } else {
-                  tempPostList[index].likes = tempPostList[index].likes.filter(
-                    (like) => like.user !== user.id,
-                  );
-                  setPostList(tempPostList);
-                }
-              }}
-            >
-              <img src="/icons/heart.svg" alt="Heart post" />
-              <Text
-                tag="span"
-                variant="subTitle"
-              >
-                {post.likes.length}
-              </Text>
-            </PostLikeButton>
+              postList={postList}
+              post={post}
+              index={index}
+              user={user}
+              setPostList={setPostList}
+            />
           </PostCard>
         ))}
       </Grid.Row>
