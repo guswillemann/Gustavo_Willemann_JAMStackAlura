@@ -70,6 +70,28 @@ const userService = {
       throw new Error('Falha na criação do post.');
     }
   },
+  async likePost(postId) {
+    const url = `${EXTERNAL_URL}/api/posts/${postId}/like`;
+    const token = await authService().getToken();
+    return fetch(url, {
+      method: 'POST',
+      'Content-Type': 'application/json',
+      headers: {
+        authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({}),
+    })
+      .then(async (response) => {
+        if (response.status === 201) {
+          const { data } = await response.json();
+          return data;
+        }
+        return undefined;
+      })
+      .catch((err) => {
+        throw new Error(err);
+      });
+  },
 };
 
 export default userService;

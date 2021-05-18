@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 /* eslint-disable indent */
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
@@ -9,6 +10,7 @@ import Text from '../../../foundation/Text';
 import breakpointsMedia from '../../../../theme/utils/breakpointsMedia';
 import useWebsitePageContext from '../../../wrappers/WebsitePage/context';
 import UserCard from './UserCard';
+import userService from '../../../../services/user/userService';
 
 const PostCard = styled(Grid.Column)`
   position: relative;
@@ -48,7 +50,6 @@ export default function ProfileScreen({ user, posts }) {
 
   useEffect(() => {
     if (!newPost) return undefined;
-    // eslint-disable-next-line no-underscore-dangle
     if (newPost._id !== postList[0]._id) setPostList([newPost, ...postList]);
     return undefined;
   }, [newPost]);
@@ -94,7 +95,6 @@ export default function ProfileScreen({ user, posts }) {
               xs: 0,
               md: (index === 0 || index % 3 === 0) ? 1.5 : 0,
             }}
-            // eslint-disable-next-line no-underscore-dangle
             key={post._id}
           >
             <PostImage
@@ -102,7 +102,22 @@ export default function ProfileScreen({ user, posts }) {
               filterClass={post.filter}
               alt="Imagem do post"
             />
-            <PostLikeButton>
+            <PostLikeButton
+              type="button"
+              onClick={async () => {
+                const tempPostList = [...postList];
+                const updatedPost = await userService.likePost(post._id);
+                if (updatedPost !== undefined) {
+                  tempPostList[index].likes = updatedPost.likes;
+                  setPostList(tempPostList);
+                } else {
+                  tempPostList[index].likes = tempPostList[index].likes.filter(
+                    (like) => like.user !== user.id,
+                  );
+                  setPostList(tempPostList);
+                }
+              }}
+            >
               <img src="/icons/heart.svg" alt="Heart post" />
               <Text
                 tag="span"
