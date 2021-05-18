@@ -30,7 +30,10 @@ export async function getServerSideProps(ctx) {
     const posts = await userService.getPostsData(ctx);
     return {
       props: {
-        user,
+        user: {
+          ...user,
+          ...session,
+        },
         posts,
         pageWrapperProps: {
           seoProps: {
