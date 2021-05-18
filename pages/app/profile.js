@@ -2,6 +2,7 @@ import websitePageHOC from '../../src/components/wrappers/WebsitePage/hoc';
 import ProfileScreen from '../../src/components/screens/app/ProfileScreen';
 import authService from '../../src/services/auth/authService';
 import userService from '../../src/services/user/userService';
+import { getUserData } from '../api/user';
 
 export default websitePageHOC(ProfileScreen, {
   pageWrapperProps: {
@@ -23,10 +24,16 @@ export async function getServerSideProps(ctx) {
   const hasActiveSession = await auth.hasActiveSession();
 
   if (hasActiveSession) {
-    const { user, posts } = await userService.getProfilePage(ctx);
+    const session = await authService(ctx).getSession();
+
+    const user = await getUserData(session.id);
+    const posts = await userService.getPostsData(ctx);
     return {
       props: {
-        user,
+        user: {
+          ...user,
+          ...session,
+        },
         posts,
         pageWrapperProps: {
           seoProps: {
