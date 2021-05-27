@@ -2,7 +2,7 @@ import React from 'react';
 import AppMenu from '.';
 import { render, screen } from '../../../../../infra/test/testUtils';
 
-describe('AppMenu()', () => {
+describe('<AppMenu />', () => {
   test('renders its buttons', () => {
     render(<AppMenu />);
 

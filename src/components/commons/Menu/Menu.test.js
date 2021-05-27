@@ -2,7 +2,7 @@ import React from 'react';
 import { render, screen } from '../../../infra/test/testUtils';
 import Menu from './index';
 
-describe('Menu()', () => {
+describe('<Menu />', () => {
   describe('when it receives variant prop', () => {
     describe('with the "public" value', () => {
       test('it renders the PublicMenu()', () => {
