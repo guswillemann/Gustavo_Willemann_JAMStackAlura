@@ -43,7 +43,7 @@
     "@types/jest": "^26.0.22",
     "babel-plugin-styled-components": "^1.8.0",
     "cz-conventional-changelog": "^3.3.0",
-    "eslint": "^7.20.0",
+    "eslint": "^7.27.0",
     "eslint-config-airbnb": "^18.2.1",
     "eslint-plugin-import": "^2.22.1",
     "eslint-plugin-jest": "^24.3.2",
