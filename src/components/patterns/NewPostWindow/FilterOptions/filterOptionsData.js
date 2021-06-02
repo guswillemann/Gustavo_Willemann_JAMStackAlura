@@ -1,5 +1,5 @@
 const filterOptionsData = [
-  { name: 'Normal', classString: '' },
+  { name: 'Normal', classString: 'filter-normal' },
   { name: '1977', classString: 'filter-1977' },
   { name: 'Aden', classString: 'filter-aden' },
   { name: 'Amaro', classString: 'filter-amaro' },

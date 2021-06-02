@@ -1,10 +1,12 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import Button from '../../../commons/Button';
 import TextField from '../../../forms/TextField';
 import Text from '../../../foundation/Text';
 
-export default function ImageUrlForm({ urlString, setUrlString, setImgSrc }) {
+export default function ImageUrlForm({ imgSrc, setImgSrc }) {
+  const [urlString, setUrlString] = useState(imgSrc);
+
   function handleChange(event) {
     const { value } = event.target;
     setUrlString(value);
@@ -24,7 +26,7 @@ export default function ImageUrlForm({ urlString, setUrlString, setImgSrc }) {
         placeholder="URL da Imagem"
         onChange={handleChange}
         value={urlString}
-        padding="13px 16px"
+        padding="13px 50px 13px 16px"
         type="url"
       />
       <Button
@@ -48,7 +50,6 @@ export default function ImageUrlForm({ urlString, setUrlString, setImgSrc }) {
 }
 
 ImageUrlForm.propTypes = {
-  urlString: PropTypes.string.isRequired,
-  setUrlString: PropTypes.func.isRequired,
+  imgSrc: PropTypes.string.isRequired,
   setImgSrc: PropTypes.func.isRequired,
 };

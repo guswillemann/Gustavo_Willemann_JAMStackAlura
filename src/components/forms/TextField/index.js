@@ -8,6 +8,7 @@ const InputWrapper = styled.div`
 `;
 
 const Input = styled(Text)`
+  text-overflow: ellipsis;
   width: 100%;
   border: 1px solid ${({ theme }) => theme.colors.tertiary.light.color};
   padding: ${({ padding }) => padding || '12px 16px'};

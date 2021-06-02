@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
 import PostImage from '../../../commons/PostImage';
@@ -44,22 +44,15 @@ const OptionButton = styled(Button)`
   `)}
 `;
 
-export default function FilterOptions({ setFilterClass, imgSrc }) {
-  const [selectedFilter, setSelectedFilter] = useState('');
-
-  function handleClick(filterClassString, filterName) {
-    setFilterClass(filterClassString);
-    setSelectedFilter(filterName);
-  }
-
+export default function FilterOptions({ filterClass, setFilterClass, imgSrc }) {
   return (
     <FilterOptionsWrapper>
       {filterOptionsData.map((filter) => (
         <OptionButton
           key={filter.name}
           name={filter.name}
-          onClick={() => handleClick(filter.classString, filter.name)}
-          selected={selectedFilter === filter.name}
+          onClick={() => setFilterClass(filter.classString)}
+          selected={filterClass === filter.classString}
           ghost
         >
           <PostImage imgSrc={imgSrc} filterClass={filter.classString} alt="Preview do filtro" width="88px" />
@@ -75,7 +68,12 @@ export default function FilterOptions({ setFilterClass, imgSrc }) {
   );
 }
 
+FilterOptions.defaultProps = {
+  filterClass: undefined,
+};
+
 FilterOptions.propTypes = {
+  filterClass: PropTypes.string,
   setFilterClass: PropTypes.func.isRequired,
   imgSrc: PropTypes.string.isRequired,
 };

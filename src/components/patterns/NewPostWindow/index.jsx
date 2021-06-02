@@ -1,15 +1,15 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import Button, { IconButton } from '../../commons/Button';
 import useWebsitePageContext from '../../wrappers/WebsitePage/context';
 import Box from '../../foundation/layout/Box';
 import PostImage from '../../commons/PostImage';
-
 import NewPostWrapper from './NewPostWrapper';
 import ImageUrlForm from './ImageUrlForm';
 import FilterOptions from './FilterOptions';
 import userService from '../../../services/user/userService';
+import Text from '../../foundation/Text';
 
 const BackButton = styled(IconButton)`
   position: absolute;
@@ -24,68 +24,81 @@ const CloseButton = styled(IconButton)`
   right: 12px;
 `;
 
-const NewPostWindowStates = {
-  default: 'default',
-  imgLoaded: 'imgLoaded',
-  selectingFilter: 'selectingFilter',
+const ErrorMessage = styled(Text)`
+  text-align: center;
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+`;
+
+const postStates = {
+  imgSelection: 'imgSelection',
+  filterSelection: 'filterSelection',
   posting: 'posting',
 };
+
+const postStatesSteps = Object.keys(postStates);
+const lastStep = postStatesSteps.length - 2;
 
 export default function NewPostWindow() {
   const {
     modalProps,
     toggleModal,
     setNewPost,
+    resetModalContent,
   } = useWebsitePageContext();
 
-  const [newPostWindowState, setNewPostWindowState] = useState(NewPostWindowStates.default);
+  const [postState, setPostState] = useState(postStates.imgSelection);
   const [imgSrc, setImgSrc] = useState('');
-  const [urlString, setUrlString] = useState('');
-  const [filterClass, setFilterClass] = useState(undefined);
+  const [filterClass, setFilterClass] = useState('');
+  const errorMessage = useRef('');
 
   useEffect(() => {
-    if (imgSrc === '') setNewPostWindowState(NewPostWindowStates.default);
-    else setNewPostWindowState(NewPostWindowStates.imgLoaded);
-  }, [imgSrc]);
+    errorMessage.current = '';
+  }, [postState]);
 
-  const isDisabled = (newPostWindowState === NewPostWindowStates.default)
-    || (newPostWindowState === NewPostWindowStates.isSelectingFilter && filterClass === undefined)
-    || (newPostWindowState === NewPostWindowStates.posting);
+  const isDisabled = (postState === postStates.imgSelection && !imgSrc)
+    || (postState === postStates.filterSelection && !filterClass);
 
-  function resetPostWindow() {
-    setNewPostWindowState(NewPostWindowStates.default);
-    setImgSrc('');
-    setUrlString('');
-    setFilterClass(undefined);
-    toggleModal();
-  }
+  const isImgSelection = postState === postStates.imgSelection;
+  const isFilterSelection = postState === postStates.filterSelection;
+  const isPosting = postState === postStates.posting;
+  const hasError = Boolean(errorMessage.current);
 
   async function completeNewPost() {
-    setNewPostWindowState(NewPostWindowStates.posting);
+    setPostState(postStates.posting);
     await userService.sendNewPost({
-      photoUrl: urlString,
+      photoUrl: imgSrc,
       description: 'Post Description',
       filter: filterClass,
     })
       .then((post) => {
         setNewPost(post);
-        resetPostWindow();
+        resetModalContent();
       })
       .catch(() => {
-        // eslint-disable-next-line no-alert
-        alert('Falha na criação do post.');
-        setNewPostWindowState(NewPostWindowStates.selectingFilter);
+        errorMessage.current = 'Não foi possível criar o post.';
+        setPostState(postStatesSteps[lastStep]);
       });
   }
 
-  function handleClick() {
-    if (newPostWindowState === NewPostWindowStates.selectingFilter) completeNewPost();
-    else setNewPostWindowState(NewPostWindowStates.selectingFilter);
+  function onNext() {
+    const postNewStateIndex = postStatesSteps.indexOf(postState) + 1;
+    if (postState === postStatesSteps[lastStep]) completeNewPost();
+    else setPostState(postStatesSteps[postNewStateIndex]);
   }
 
   function onBack() {
-    setNewPostWindowState(NewPostWindowStates.imgLoaded);
-    setFilterClass(undefined);
+    const postNewStateIndex = postStatesSteps.indexOf(postState) - 1;
+    switch (postState) {
+      case (postStates.filterSelection): {
+        setFilterClass('');
+        setPostState(postStatesSteps[postNewStateIndex]);
+        break;
+      }
+      default: setPostState(postStatesSteps[postNewStateIndex]);
+    }
   }
 
   return (
@@ -98,7 +111,7 @@ export default function NewPostWindow() {
         // eslint-disable-next-line react/jsx-props-no-spreading
         {...modalProps}
       >
-        {newPostWindowState === NewPostWindowStates.selectingFilter && (
+        {!(isImgSelection || isPosting) && (
           <BackButton type="button" onClick={onBack}>
             <img src="/icons/arrow-right-dark.svg" alt="Voltar" />
           </BackButton>
@@ -110,21 +123,20 @@ export default function NewPostWindow() {
 
         <PostImage imgSrc={imgSrc} filterClass={filterClass} alt="Imagem escolhida" />
 
-        {(newPostWindowState === NewPostWindowStates.selectingFilter
-          || newPostWindowState === NewPostWindowStates.posting)
-          ? (
-            <FilterOptions
-              imgSrc={imgSrc}
-              setFilterClass={setFilterClass}
-            />
-          )
-          : (
-            <ImageUrlForm
-              urlString={urlString}
-              setUrlString={setUrlString}
-              setImgSrc={setImgSrc}
-            />
-          )}
+        {isImgSelection && (
+          <ImageUrlForm
+            imgSrc={imgSrc}
+            setImgSrc={setImgSrc}
+          />
+        )}
+
+        {(isFilterSelection || isPosting) && (
+          <FilterOptions
+            imgSrc={imgSrc}
+            filterClass={filterClass}
+            setFilterClass={setFilterClass}
+          />
+        )}
 
         <Box
           padding="0 24px"
@@ -132,12 +144,20 @@ export default function NewPostWindow() {
           <Button
             variant="primary.main"
             fullWidth
-            onClick={handleClick}
+            onClick={onNext}
             disabled={isDisabled}
             type="button"
           >
-            {newPostWindowState === NewPostWindowStates.selectingFilter ? 'Postar' : 'Avançar'}
+            {isFilterSelection ? 'Postar' : 'Avançar'}
           </Button>
+
+          {hasError && (
+            <ErrorMessage
+              color="error.main"
+            >
+              {errorMessage.current}
+            </ErrorMessage>
+          )}
         </Box>
       </NewPostWrapper>
     </Box>
