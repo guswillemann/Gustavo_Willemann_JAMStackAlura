@@ -49,6 +49,7 @@ export default function FilterOptions({ filterClass, setFilterClass, imgSrc }) {
     <FilterOptionsWrapper>
       {filterOptionsData.map((filter) => (
         <OptionButton
+          type="button"
           key={filter.name}
           name={filter.name}
           onClick={() => setFilterClass(filter.classString)}

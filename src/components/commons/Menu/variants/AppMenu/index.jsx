@@ -7,7 +7,7 @@ import FormSearch from '../../../../patterns/FormSearch';
 import { IconButton } from '../../../Button';
 import AppMenuWrapper from './styles/AppMenuWrapper';
 import useWebsitePageContext from '../../../../wrappers/WebsitePage/context';
-import NewPostWindow from '../../../../patterns/NewPostWindow';
+import NewPostForm from '../../../../patterns/NewPostForm';
 
 const PostButton = styled(IconButton)`
   order: 3;
@@ -83,7 +83,7 @@ export default function AppMenu() {
         <AppMenuWrapper.RightSide>
           <FormSearch />
           <PostButton
-            onClick={() => toggleModal(<NewPostWindow />)}
+            onClick={() => toggleModal(<NewPostForm />)}
           >
             <img src="/icons/postIcon.svg" alt="Post" />
           </PostButton>

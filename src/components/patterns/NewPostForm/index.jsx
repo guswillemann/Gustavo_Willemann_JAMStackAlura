@@ -6,8 +6,9 @@ import useWebsitePageContext from '../../wrappers/WebsitePage/context';
 import Box from '../../foundation/layout/Box';
 import PostImage from '../../commons/PostImage';
 import NewPostWrapper from './NewPostWrapper';
-import ImageUrlForm from './ImageUrlForm';
+import ImageUrlInput from './ImageUrlInput';
 import FilterOptions from './FilterOptions';
+import DescriptionInput from './DescriptionInput';
 import userService from '../../../services/user/userService';
 import Text from '../../foundation/Text';
 
@@ -35,13 +36,14 @@ const ErrorMessage = styled(Text)`
 const postStates = {
   imgSelection: 'imgSelection',
   filterSelection: 'filterSelection',
+  describing: 'describing',
   posting: 'posting',
 };
 
 const postStatesSteps = Object.keys(postStates);
 const lastStep = postStatesSteps.length - 2;
 
-export default function NewPostWindow() {
+export default function NewPostForm() {
   const {
     modalProps,
     toggleModal,
@@ -52,6 +54,7 @@ export default function NewPostWindow() {
   const [postState, setPostState] = useState(postStates.imgSelection);
   const [imgSrc, setImgSrc] = useState('');
   const [filterClass, setFilterClass] = useState('');
+  const [description, setDescription] = useState('');
   const errorMessage = useRef('');
 
   useEffect(() => {
@@ -63,14 +66,15 @@ export default function NewPostWindow() {
 
   const isImgSelection = postState === postStates.imgSelection;
   const isFilterSelection = postState === postStates.filterSelection;
+  const isDescribing = postState === postStates.describing;
   const isPosting = postState === postStates.posting;
   const hasError = Boolean(errorMessage.current);
 
-  async function completeNewPost() {
+  async function submitNewPost() {
     setPostState(postStates.posting);
     await userService.sendNewPost({
       photoUrl: imgSrc,
-      description: 'Post Description',
+      description,
       filter: filterClass,
     })
       .then((post) => {
@@ -85,20 +89,17 @@ export default function NewPostWindow() {
 
   function onNext() {
     const postNewStateIndex = postStatesSteps.indexOf(postState) + 1;
-    if (postState === postStatesSteps[lastStep]) completeNewPost();
+    if (postState === postStatesSteps[lastStep]) submitNewPost();
     else setPostState(postStatesSteps[postNewStateIndex]);
   }
 
   function onBack() {
     const postNewStateIndex = postStatesSteps.indexOf(postState) - 1;
-    switch (postState) {
-      case (postStates.filterSelection): {
-        setFilterClass('');
-        setPostState(postStatesSteps[postNewStateIndex]);
-        break;
-      }
-      default: setPostState(postStatesSteps[postNewStateIndex]);
-    }
+
+    if (isFilterSelection) setFilterClass('');
+    if (isDescribing) setDescription('');
+
+    setPostState(postStatesSteps[postNewStateIndex]);
   }
 
   return (
@@ -124,17 +125,24 @@ export default function NewPostWindow() {
         <PostImage imgSrc={imgSrc} filterClass={filterClass} alt="Imagem escolhida" />
 
         {isImgSelection && (
-          <ImageUrlForm
+          <ImageUrlInput
             imgSrc={imgSrc}
             setImgSrc={setImgSrc}
           />
         )}
 
-        {(isFilterSelection || isPosting) && (
+        {(isFilterSelection) && (
           <FilterOptions
             imgSrc={imgSrc}
             filterClass={filterClass}
             setFilterClass={setFilterClass}
+          />
+        )}
+
+        {(isDescribing || isPosting) && (
+          <DescriptionInput
+            description={description}
+            setDescription={setDescription}
           />
         )}
 
@@ -148,7 +156,9 @@ export default function NewPostWindow() {
             disabled={isDisabled}
             type="button"
           >
-            {isFilterSelection ? 'Postar' : 'Avançar'}
+            {postState === postStatesSteps[lastStep] || isPosting
+              ? 'Postar'
+              : 'Avançar'}
           </Button>
 
           {hasError && (
