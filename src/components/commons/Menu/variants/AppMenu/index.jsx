@@ -83,6 +83,7 @@ export default function AppMenu() {
         <AppMenuWrapper.RightSide>
           <FormSearch />
           <PostButton
+            name="newPostBtn"
             onClick={() => toggleModal(<NewPostForm />)}
           >
             <img src="/icons/postIcon.svg" alt="Post" />

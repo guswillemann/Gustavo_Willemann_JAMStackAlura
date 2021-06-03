@@ -109,6 +109,7 @@ export default function NewPostForm() {
       flex="1"
     >
       <NewPostWrapper
+        id="newPostForm"
         // eslint-disable-next-line react/jsx-props-no-spreading
         {...modalProps}
       >
@@ -155,6 +156,7 @@ export default function NewPostForm() {
             onClick={onNext}
             disabled={isDisabled}
             type="button"
+            name="nextStepBtn"
           >
             {postState === postStatesSteps[lastStep] || isPosting
               ? 'Postar'

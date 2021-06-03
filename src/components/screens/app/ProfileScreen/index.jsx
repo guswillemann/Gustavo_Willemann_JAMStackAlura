@@ -76,6 +76,7 @@ export default function ProfileScreen({ user, posts }) {
               md: (index === 0 || index % 3 === 0) ? 1.5 : 0,
             }}
             key={post._id}
+            data={`description-${post.description}`}
           >
             <PostImage
               imgSrc={post.photoUrl}

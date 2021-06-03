@@ -53,6 +53,7 @@ export default function ImageUrlForm({ imgSrc, setImgSrc }) {
         onClick={onClick}
         variant="secondary.main"
         padding="12px 12px"
+        name="selectUrlBtn"
       >
         <img src="/icons/arrow-right.svg" alt="Selecionar Imagem" />
       </Button>
