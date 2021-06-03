@@ -9,7 +9,7 @@ const onSubmit = jest.fn((event) => {
   event.preventDefault();
 });
 
-describe('<FromLogin />', () => {
+describe('<FormLogin />', () => {
   describe('when form fields are valid', () => {
     test('complete the submission', async () => {
       await act(async () => render(

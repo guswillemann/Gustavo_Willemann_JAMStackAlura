@@ -19,6 +19,11 @@ export function WebsitePageContextProvider({ children, messages }) {
     setModalOpen(!isModalOpen);
   }
 
+  function resetModalContent() {
+    setModalContent(null);
+    setModalOpen(false);
+  }
+
   function getCMSContent(cmsKey) {
     return get(messages, cmsKey);
   }
@@ -27,6 +32,7 @@ export function WebsitePageContextProvider({ children, messages }) {
     <WebsitePageContext.Provider
       value={{
         toggleModal,
+        resetModalContent,
         getCMSContent,
         modalProps,
         modalContent,
