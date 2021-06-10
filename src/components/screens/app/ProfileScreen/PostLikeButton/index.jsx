@@ -1,6 +1,6 @@
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable react/forbid-prop-types */
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { Lottie } from '@crello/react-lottie';
@@ -34,7 +34,7 @@ const PostLikeButtonWrapper = styled(Button)`
 export default function PostLikeButton({
   postList, post, index, user, setPostList,
 }) {
-  const hasLiked = Boolean(post.likes.find((like) => like.user === user.id));
+  const [hasLiked, setHasLiked] = useState(post.likes.find((like) => like.user === user.id));
 
   function addLike(updatedPost) {
     const tempPostList = [...postList];
@@ -51,8 +51,10 @@ export default function PostLikeButton({
   }
 
   async function likePost() {
+    setHasLiked(!hasLiked);
     const updatedPost = await userService.likePost(post._id);
-    if (updatedPost !== undefined) addLike(updatedPost);
+    const hasUpdatedPostData = Boolean(updatedPost);
+    if (hasUpdatedPostData) addLike(updatedPost);
     else removeLike();
   }
 

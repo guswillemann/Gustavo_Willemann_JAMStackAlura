@@ -7,9 +7,13 @@ const EXTERNAL_URL = isStagingEnv
   : 'https://instalura-api.vercel.app';
 
 const userService = {
-  async getUserData(ctx) {
-    const session = await authService(ctx).getSession();
-    const userData = await HttpClient('/api/user', {
+  async getUserData(
+    ctx,
+    HttpClientModule = HttpClient,
+    authServiceModule = authService,
+  ) {
+    const session = await authServiceModule(ctx).getSession();
+    const userData = await HttpClientModule('/api/user', {
       method: 'POST',
       body: {
         id: session.id,
@@ -22,63 +26,60 @@ const userService = {
     };
   },
 
-  async getPostsData(ctx) {
+  async getPostsData(
+    ctx,
+    HttpClientModule = HttpClient,
+    authServiceModule = authService,
+  ) {
     const url = `${EXTERNAL_URL}/api/users/posts`;
-    try {
-      const token = await authService(ctx).getToken();
-      const response = await HttpClient(url, {
-        headers: {
-          authorization: `Bearer ${token}`,
-        },
-      });
-      return response.data.reverse();
-    } catch (err) {
-      throw new Error('Não conseguimos pegar os posts');
-    }
+    const token = await authServiceModule(ctx).getToken();
+    const response = await HttpClientModule(url, {
+      headers: {
+        authorization: `Bearer ${token}`,
+      },
+    });
+    if (!response.data) throw new Error('Failed to get the posts data');
+    return response.data.reverse();
   },
 
-  async sendNewPost({ photoUrl, description, filter }) {
+  async sendNewPost(
+    { photoUrl, description, filter },
+    HttpClientModule = HttpClient,
+    authServiceModule = authService,
+  ) {
     const url = `${EXTERNAL_URL}/api/posts`;
-    try {
-      const token = await authService().getToken();
-      const response = await HttpClient(url, {
-        method: 'POST',
-        headers: {
-          authorization: `Bearer ${token}`,
-        },
-        body: {
-          photoUrl,
-          description,
-          filter,
-        },
-      });
-      return response.data;
-    } catch {
-      throw new Error('Falha na criação do post.');
-    }
+    const token = await authServiceModule().getToken();
+    const response = await HttpClientModule(url, {
+      method: 'POST',
+      headers: {
+        authorization: `Bearer ${token}`,
+      },
+      body: {
+        photoUrl,
+        description,
+        filter,
+      },
+    });
+    if (!response.data) throw new Error('Failed to create a new post');
+    return response.data;
   },
 
-  async likePost(postId) {
+  async likePost(
+    postId,
+    HttpClientModule = HttpClient,
+    authServiceModule = authService,
+  ) {
     const url = `${EXTERNAL_URL}/api/posts/${postId}/like`;
-    const token = await authService().getToken();
-    return fetch(url, {
+    const token = await authServiceModule().getToken();
+    const response = await HttpClientModule(url, {
       method: 'POST',
       'Content-Type': 'application/json',
       headers: {
         authorization: `Bearer ${token}`,
       },
-      body: JSON.stringify({}),
-    })
-      .then(async (response) => {
-        if (response.status === 201) {
-          const { data } = await response.json();
-          return data;
-        }
-        return undefined;
-      })
-      .catch((err) => {
-        throw new Error(err);
-      });
+      body: {},
+    });
+    return response.data;
   },
 };
 

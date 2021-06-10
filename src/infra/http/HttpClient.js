@@ -7,10 +7,9 @@ export default async function HttpClient(url, { headers, body, ...options }) {
     body: JSON.stringify(body),
     ...options,
   })
-    .then((respostaDoServer) => {
-      if (respostaDoServer.ok) {
-        return respostaDoServer.json();
-      }
+    .then((serverResponse) => {
+      if (serverResponse.status === 204) return { data: null };
+      if (serverResponse.ok) return serverResponse.json();
 
       throw new Error('Falha em pegar os dados do servidor :(');
     });

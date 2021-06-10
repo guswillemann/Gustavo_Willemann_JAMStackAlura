@@ -19,11 +19,25 @@ describe('/pages/app/profile/', () => {
       const profileScreen = new ProfileScreenPageObject(cy);
       profileScreen.openNewPostWindow();
 
+      cy.get('#newPostForm img[alt="Imagem escolhida"]').should('not.exist');
+
       const newPostForm = new NewPostFormObject(cy);
       newPostForm
-        .selectImg(imageUrl)
+        .selectImg(imageUrl);
+
+      cy.get('#newPostForm img[alt="Imagem escolhida"]')
+        .should('have.attr', 'src')
+        .should('include', 'placedog.net');
+
+      newPostForm
         .goToNextStep()
-        .selectFilter()
+        .selectFilter();
+
+      cy.get('#newPostForm button[name="X-Pro II"]')
+        .should('exist')
+        .should('not.be.visible');
+
+      newPostForm
         .goToNextStep()
         .describePost(description)
         .submitPost();
