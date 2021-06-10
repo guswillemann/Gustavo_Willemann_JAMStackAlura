@@ -53,7 +53,8 @@ export default function PostLikeButton({
   async function likePost() {
     setHasLiked(!hasLiked);
     const updatedPost = await userService.likePost(post._id);
-    if (updatedPost !== undefined) addLike(updatedPost);
+    const hasUpdatedPostData = Boolean(updatedPost);
+    if (hasUpdatedPostData) addLike(updatedPost);
     else removeLike();
   }
 
