@@ -9,6 +9,7 @@ export { getContent } from './getContent';
 export default function AboutScreen({ messages }) {
   return (
     <Box
+      as="main"
       display="flex"
       flexDirection="column"
       flex={1}
@@ -31,6 +32,7 @@ export default function AboutScreen({ messages }) {
             />
 
             <Box
+              color="tertiary"
               dangerouslySetInnerHTML={{
                 __html: messages.pageAbout.pageDescription,
               }}

@@ -1,60 +1,53 @@
 import typographyVariants from './TypographyVariants';
 
-const colors = {
+const light = {
+  logo: { color: '#070C0E' },
   background: {
-    light: {
-      color: '#FFFFFF',
-    },
-    main: {
-      color: '#F2F2F2',
-    },
+    color: '#FFFFFF',
+    main: { color: '#F2F2F2' },
   },
-  borders: {
-    main: {
-      color: '#F1F1F1',
-    },
-  },
+  borders: { color: '#F1F1F1' },
   primary: {
-    main: {
-      color: '#D7385E',
-      contrastText: '#fff',
-    },
+    color: '#D7385E',
+    contrast: '#FFFFFF',
   },
-  secondary: {
-    main: {
-      color: '#FB7B6B',
-      contrastText: '#fff',
-    },
-  },
+  secondary: { color: '#FB7B6B' },
   tertiary: {
-    main: {
-      color: '#070C0E',
-      contrastText: '#fff',
-    },
-    light: {
-      color: '#88989E',
-      contrastText: '#fff',
-    },
+    color: '#88989E',
+    contrast: '#FFFFFF',
+    main: { color: '#070C0E' },
   },
-  error: {
-    main: {
-      color: '#dc3545',
-      contrastText: '#fff',
-    },
+  error: { color: '#dc3545' },
+  success: { color: '#28a745' },
+};
+
+const dark = {
+  logo: { color: '#FFFFFF' },
+  background: {
+    color: '#030506',
+    main: { color: '#030506' },
   },
-  success: {
-    main: {
-      color: '#28a745',
-      contrastText: '#fff',
-    },
+  borders: { color: '#181F22' },
+  primary: {
+    color: '#F27895',
+    contrast: '#FFFFFF',
   },
-  modes: {
-    dark: {},
+  secondary: { color: '#FFA59A' },
+  tertiary: {
+    color: '#D5D5D5',
+    contrast: '#FFFFFF',
+    main: { color: '#FFFFFF' },
   },
+  error: { color: '#EB5C50' },
+  success: { color: '#28a745' },
+};
+
+export const colorThemes = {
+  light,
+  dark,
 };
 
 export default {
-  colors,
   borderRadius: '12px',
   transition: '200ms ease-in-out',
   typographyVariants,

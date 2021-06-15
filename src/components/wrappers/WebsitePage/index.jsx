@@ -21,7 +21,10 @@ export default function WebsitePageWrapper({
 }) {
   const theme = useContext(ThemeContext);
 
-  const { backgroundColor, ...remainingPageBoxProps } = pageBoxProps;
+  const {
+    backgroundColor, backgroundThemedImage, ...remainingPageBoxProps
+  } = pageBoxProps;
+  const hasThemedImage = Boolean(backgroundThemedImage);
 
   return (
     <WebsitePageContextProvider messages={messages}>
@@ -34,7 +37,8 @@ export default function WebsitePageWrapper({
         flex="1"
         flexDirection="column"
         justifyContent="space-between"
-        backgroundColor={get(theme, backgroundColor)}
+        backgroundColor={get(theme.colors, `${backgroundColor}.color`)}
+        backgroundImage={hasThemedImage && `url(/images/theme/${theme.currentActive}${backgroundThemedImage})`}
         {...remainingPageBoxProps}
       >
         <Modal />
@@ -76,6 +80,7 @@ WebsitePageWrapper.propTypes = {
   }),
   pageBoxProps: PropTypes.shape({
     backgroundImage: PropTypes.string,
+    backgroundThemedImage: PropTypes.string,
     backgroundRepeat: PropTypes.string,
     backgroundPosition: PropTypes.string,
     backgroundColor: PropTypes.string,

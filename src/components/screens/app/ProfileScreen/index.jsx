@@ -11,10 +11,13 @@ import UserCard from './UserCard';
 import PostLikeButton from './PostLikeButton';
 
 const PostCard = styled(Grid.Column)`
-  position: relative;
   font-size: 0;
   margin-bottom: 8px;
   padding: 0 4px;
+
+  & > div {
+    position: relative;
+  }
 
   ${breakpointsMedia({
     lg: {
@@ -36,6 +39,7 @@ export default function ProfileScreen({ user, posts }) {
 
   return (
     <Grid.Container
+      as="main"
       flex={1}
     >
       <Grid.Row>
@@ -65,34 +69,39 @@ export default function ProfileScreen({ user, posts }) {
           />
         </Grid.Column>
       </Grid.Row>
-      <Grid.Row
-        as="section"
-      >
-        {postList.map((post, index) => (
-          <PostCard
-            value={{ xs: 4, md: 3 }}
-            offset={{
-              xs: 0,
-              md: (index === 0 || index % 3 === 0) ? 1.5 : 0,
-            }}
-            key={post._id}
-            data={`description-${post.description}`}
-          >
-            <PostImage
-              imgSrc={post.photoUrl}
-              filterClass={post.filter}
-              alt="Imagem do post"
-            />
-            <PostLikeButton
-              postList={postList}
-              post={post}
-              index={index}
-              user={user}
-              setPostList={setPostList}
-            />
-          </PostCard>
-        ))}
-      </Grid.Row>
+      <section name="User posts">
+        <Grid.Row
+          as="ul"
+        >
+          {postList.map((post, index) => (
+            <PostCard
+              as="li"
+              value={{ xs: 4, md: 3 }}
+              offset={{
+                xs: 0,
+                md: (index === 0 || index % 3 === 0) ? 1.5 : 0,
+              }}
+              key={post._id}
+              data={`description-${post.description}`}
+            >
+              <div styles={{ width: '100%' }}>
+                <PostImage
+                  imgSrc={post.photoUrl}
+                  filterClass={post.filter}
+                  alt="Imagem do post"
+                />
+                <PostLikeButton
+                  postList={postList}
+                  post={post}
+                  index={index}
+                  user={user}
+                  setPostList={setPostList}
+                />
+              </div>
+            </PostCard>
+          ))}
+        </Grid.Row>
+      </section>
     </Grid.Container>
   );
 }

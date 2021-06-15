@@ -6,15 +6,13 @@ import React from 'react';
 import styled from 'styled-components';
 
 const StyledLink = styled.a`
-  color: inherit;
   ${({ theme, color }) => (color
     ? `color: ${get(theme, `colors.${color}.color`)}`
     : 'color: inherit;')};
   text-decoration: none;
   opacity: 1;
   transition: opacity ${({ theme }) => theme.transition};
-  :hover,
-  :focus {
+  &:hover, &:focus {
     opacity: .5;
   }
 `;

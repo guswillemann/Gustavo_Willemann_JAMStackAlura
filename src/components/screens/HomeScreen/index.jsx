@@ -1,4 +1,5 @@
 import React from 'react';
+import styled from 'styled-components';
 import Button from '../../commons/Button';
 import Box from '../../foundation/layout/Box';
 import Grid from '../../foundation/layout/Grid';
@@ -6,11 +7,16 @@ import Text from '../../foundation/Text';
 import FormRegister from '../../patterns/FormRegister';
 import useWebsitePageContext from '../../wrappers/WebsitePage/context';
 
+const HomeImage = styled.img`
+  width: 100%;
+`;
+
 export default function HomeScreen() {
   const websitePageContext = useWebsitePageContext();
 
   return (
     <Box
+      as="main"
       display="flex"
       flexDirection="column"
       flex="1"
@@ -34,7 +40,7 @@ export default function HomeScreen() {
             <Text
               variant="title"
               tag="h1"
-              color="tertiary.main"
+              color="tertiary"
           // textAlign="right"
               textAlign={{
                 xs: 'center',
@@ -46,7 +52,7 @@ export default function HomeScreen() {
             <Text
               variant="paragraph1"
               tag="p"
-              color="tertiary.light"
+              color="tertiary"
               textAlign={{
                 xs: 'center',
                 md: 'left',
@@ -62,7 +68,7 @@ export default function HomeScreen() {
                 md: 'initial',
               }}
               display="block"
-              variant="primary.main"
+              variant="primary"
               onClick={() => websitePageContext.toggleModal(<FormRegister />)}
             >
               Cadastrar
@@ -74,7 +80,7 @@ export default function HomeScreen() {
               md: 6,
             }}
           >
-            <img
+            <HomeImage
               alt="Imagem de celular com páginas internas do projeto com o perfil do Cage"
               style={{ display: 'block', margin: 'auto' }}
               src="https://bootcamp-alura-01-git-modulo01.omariosouto.vercel.app/images/phones.png"

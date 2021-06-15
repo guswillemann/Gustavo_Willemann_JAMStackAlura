@@ -7,6 +7,7 @@ import Grid from '../../foundation/layout/Grid';
 export default function FAQScreen({ faqCategories }) {
   return (
     <Box
+      as="main"
       display="flex"
       flexDirection="column"
       flex="1"
@@ -66,7 +67,7 @@ export default function FAQScreen({ faqCategories }) {
                           href={`/faq/${question.slug}`}
                           variant="paragraph1"
                           tag="h2"
-                          color="tertiary.light"
+                          color="tertiary"
                         >
                           {question.title}
                         </Text>

@@ -13,6 +13,7 @@ export default function FAQQuestionScreen({ category, question }) {
   const theme = useTheme();
   return (
     <Grid.Container
+      as="main"
       flex="1"
       marginTop={{
         xs: '32px',
@@ -42,16 +43,16 @@ export default function FAQQuestionScreen({ category, question }) {
             as="ul"
             listStyle="none"
             padding="24px 30px"
-            backgroundColor={theme.colors.borders.main.color}
+            backgroundColor={theme.colors.borders}
             borderRadiusTheme
           >
             {category.questions.map((currentQuestion) => (
-              <RelatedLink>
+              <RelatedLink key={currentQuestion.title}>
                 <Text
                   key={currentQuestion.slug}
                   variant="paragraph2"
-                  href={`/${currentQuestion.slug}`}
-                  color="primary.main"
+                  href={`/faq/${currentQuestion.slug}`}
+                  color="primary"
                 >
                   {currentQuestion.title}
                 </Text>
@@ -76,7 +77,7 @@ export default function FAQQuestionScreen({ category, question }) {
           <Text
             as="p"
             variant="paragraph1"
-            color="tertiary.light"
+            color="tertiary"
             // eslint-disable-next-line react/no-danger
             dangerouslySetInnerHTML={{ __html: question.description }}
           />

@@ -17,7 +17,7 @@ const AppMenuWrapper = styled.nav`
   left: 0;
   z-index: 10;
   
-  background-color: ${({ theme }) => theme.colors.background.light.color};
+  background-color: ${({ theme }) => theme.colors.background.color};
 
   ${breakpointsMedia({
     md: css`

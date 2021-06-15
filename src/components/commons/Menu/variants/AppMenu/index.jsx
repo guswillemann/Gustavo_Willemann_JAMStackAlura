@@ -60,7 +60,7 @@ const AvatarImage = styled.img`
   width: 32px;
   height: 32px;
   border-radius: 50%;
-  border: 3px solid ${({ theme }) => theme.colors.primary.main.color};
+  border: 3px solid ${({ theme }) => theme.colors.primary.color};
   ${breakpointsMedia({
     md: {
       marginLeft: '32px',
@@ -74,7 +74,11 @@ export default function AppMenu() {
 
   return (
     <Box
-      backgroundColor={theme.colors.background.light.color}
+      as="header"
+      backgroundColor={theme.colors.background.color}
+      borderBottom={theme.currentActive === 'dark'
+        ? `1px solid ${theme.colors.borders.color}`
+        : 'initial'}
     >
       <AppMenuWrapper>
         <AppMenuWrapper.LeftSide>
@@ -86,11 +90,11 @@ export default function AppMenu() {
             name="newPostBtn"
             onClick={() => toggleModal(<NewPostForm />)}
           >
-            <img src="/icons/postIcon.svg" alt="Post" />
+            <img src={`/icons/theme/${theme.currentActive}/postIcon.svg`} alt="Post" />
           </PostButton>
           <OpenSearchButton><img src="/icons/search.svg" alt="Abrir pesquisa" /></OpenSearchButton>
-          <HomeButton><img src="/icons/home.svg" alt="Home" /></HomeButton>
-          <HeartButton><img src="/icons/heart.svg" alt="Like" /></HeartButton>
+          <HomeButton><img src={`/icons/theme/${theme.currentActive}/home.svg`} alt="Home" /></HomeButton>
+          <HeartButton><img src={`/icons/theme/${theme.currentActive}/heart.svg`} alt="Like" /></HeartButton>
           <AvatarImage src="https://picsum.photos/200" alt="Avatar" />
         </AppMenuWrapper.RightSide>
       </AppMenuWrapper>

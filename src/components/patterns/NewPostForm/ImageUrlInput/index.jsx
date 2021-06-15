@@ -21,7 +21,7 @@ const ImageUrlFormWrapper = styled.div`
   }
   
   p {
-    color: ${({ theme }) => theme.colors.tertiary.light.color}
+    color: ${({ theme }) => theme.colors.tertiary.color}
   }
 `;
 
@@ -51,7 +51,7 @@ export default function ImageUrlForm({ imgSrc, setImgSrc }) {
       <Button
         type="button"
         onClick={onClick}
-        variant="secondary.main"
+        variant="secondary"
         padding="12px 12px"
         name="selectUrlBtn"
       >

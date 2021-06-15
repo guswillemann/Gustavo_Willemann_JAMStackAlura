@@ -14,12 +14,15 @@ const FooterWrapper = styled.footer`
     margin-right: 23px;
   }
   a {
-    color: ${({ theme }) => theme.colors.primary.main.color};
+    color: ${({ theme }) => theme.colors.primary.color};
     text-decoration: none;
     transition: .3s;
     &:hover, &:focus {
       opacity: .5;
     }
+  }
+  p {
+    color: ${({ theme }) => theme.colors.tertiary.main.color};
   }
 `;
 

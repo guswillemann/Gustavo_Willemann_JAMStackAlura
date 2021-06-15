@@ -6,10 +6,20 @@ export default websitePageHOC(HomeScreen, {
     seoProps: {
       headTitle: 'Home',
     },
-    pageBoxProps: {
-      backgroundImage: 'url(/images/bubbles.svg)',
-      backgroundRepeat: 'no-repeat',
-      backgroundPosition: 'bottom right',
-    },
   },
 });
+
+export async function getServerSideProps() {
+  return {
+    props: {
+      pageWrapperProps: {
+        pageBoxProps: {
+          backgroundThemedImage: '/bubbles.svg',
+          backgroundRepeat: 'no-repeat',
+          backgroundPosition: 'bottom right',
+          backgroundColor: 'background',
+        },
+      },
+    },
+  };
+}

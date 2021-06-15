@@ -45,13 +45,13 @@ const OptionButton = styled(Button)`
   }
 
   ${({ theme, selected }) => (selected && css`
-    background-color: ${theme.colors.primary.main.color};
-    color: ${theme.colors.primary.main.contrastText};
+    background-color: ${theme.colors.primary.color};
+    color: ${theme.colors.primary.contrast};
   `)}
 `;
 
 const ProgressButton = styled.button`
-  background-color: ${({ theme }) => theme.colors.primary.main.color};
+  background-color: ${({ theme }) => theme.colors.primary.color};
   background-image: url('/icons/chevron.svg');
   background-repeat: no-repeat;
   background-position: center;

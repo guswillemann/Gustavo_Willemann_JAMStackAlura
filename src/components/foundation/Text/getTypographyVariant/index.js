@@ -45,13 +45,14 @@ export const TextStyleVariantsMap = {
   `,
 };
 
-export default function getTypographyVariant() {
+export default function getTypographyVariant(VariantMap = TextStyleVariantsMap) {
   return ({ variant }) => {
-    if (typeof variant === 'string') return TextStyleVariantsMap[variant];
+    if (!variant) throw new Error('The component must have a variant');
+    if (typeof variant === 'string') return VariantMap[variant];
     const breakpoints = Object.keys(variant);
     const typographyByBreakpoints = {};
     breakpoints.forEach((breakpoint) => {
-      typographyByBreakpoints[breakpoint] = TextStyleVariantsMap[variant[breakpoint]];
+      typographyByBreakpoints[breakpoint] = VariantMap[variant[breakpoint]];
     });
 
     return breakpointsMedia(typographyByBreakpoints);
