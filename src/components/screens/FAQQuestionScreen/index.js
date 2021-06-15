@@ -13,6 +13,7 @@ export default function FAQQuestionScreen({ category, question }) {
   const theme = useTheme();
   return (
     <Grid.Container
+      as="main"
       flex="1"
       marginTop={{
         xs: '32px',

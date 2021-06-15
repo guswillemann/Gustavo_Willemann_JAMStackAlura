@@ -7,6 +7,7 @@ import Grid from '../../foundation/layout/Grid';
 export default function FAQScreen({ faqCategories }) {
   return (
     <Box
+      as="main"
       display="flex"
       flexDirection="column"
       flex="1"

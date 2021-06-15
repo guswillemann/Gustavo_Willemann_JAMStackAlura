@@ -13,6 +13,7 @@ export default function LoginScreen() {
 
   return (
     <Grid.Container
+      as="main"
       display="flex"
       flex="1"
       alignItems="center"

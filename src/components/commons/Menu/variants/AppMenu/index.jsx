@@ -74,6 +74,7 @@ export default function AppMenu() {
 
   return (
     <Box
+      as="header"
       backgroundColor={theme.colors.background.color}
       borderBottom={theme.currentActive === 'dark'
         ? `1px solid ${theme.colors.borders.color}`

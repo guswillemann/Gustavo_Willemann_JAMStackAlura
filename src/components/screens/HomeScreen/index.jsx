@@ -16,6 +16,7 @@ export default function HomeScreen() {
 
   return (
     <Box
+      as="main"
       display="flex"
       flexDirection="column"
       flex="1"

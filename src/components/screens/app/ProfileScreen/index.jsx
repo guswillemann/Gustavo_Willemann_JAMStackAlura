@@ -39,6 +39,7 @@ export default function ProfileScreen({ user, posts }) {
 
   return (
     <Grid.Container
+      as="main"
       flex={1}
     >
       <Grid.Row>

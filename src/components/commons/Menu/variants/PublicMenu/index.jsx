@@ -25,27 +25,29 @@ export default function PublicMenu() {
   const { toggleModal } = useWebsitePageContext();
 
   return (
-    <PublicMenuWrapper>
-      <PublicMenuWrapper.LeftSide>
-        <Logo />
-      </PublicMenuWrapper.LeftSide>
-      <PublicMenuWrapper.Central>
-        {links.map((link) => (
-          <li key={link.url}>
-            <Text variant="smallestException" tag="a" href={link.url} color="tertiary.main">
-              {link.text}
-            </Text>
-          </li>
-        ))}
-      </PublicMenuWrapper.Central>
-      <PublicMenuWrapper.RightSide>
-        <Button ghost variant="secondary" href="/app/login">
-          Entrar
-        </Button>
-        <Button variant="primary" onClick={() => toggleModal(<FormRegister />)}>
-          Cadastrar
-        </Button>
-      </PublicMenuWrapper.RightSide>
-    </PublicMenuWrapper>
+    <header>
+      <PublicMenuWrapper>
+        <PublicMenuWrapper.LeftSide>
+          <Logo />
+        </PublicMenuWrapper.LeftSide>
+        <PublicMenuWrapper.Central>
+          {links.map((link) => (
+            <li key={link.url}>
+              <Text variant="smallestException" tag="a" href={link.url} color="tertiary.main">
+                {link.text}
+              </Text>
+            </li>
+          ))}
+        </PublicMenuWrapper.Central>
+        <PublicMenuWrapper.RightSide>
+          <Button ghost variant="secondary" href="/app/login">
+            Entrar
+          </Button>
+          <Button variant="primary" onClick={() => toggleModal(<FormRegister />)}>
+            Cadastrar
+          </Button>
+        </PublicMenuWrapper.RightSide>
+      </PublicMenuWrapper>
+    </header>
   );
 }
