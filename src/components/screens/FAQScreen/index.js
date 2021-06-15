@@ -66,7 +66,7 @@ export default function FAQScreen({ faqCategories }) {
                           href={`/faq/${question.slug}`}
                           variant="paragraph1"
                           tag="h2"
-                          color="tertiary.light"
+                          color="tertiary"
                         >
                           {question.title}
                         </Text>

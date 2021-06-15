@@ -14,7 +14,7 @@ export default websitePageHOC(ProfileScreen, {
       display: true,
     },
     pageBoxProps: {
-      backgroundColor: 'colors.background.main.color',
+      backgroundColor: 'background.main',
     },
   },
 });

@@ -32,17 +32,17 @@ export default function PublicMenu() {
       <PublicMenuWrapper.Central>
         {links.map((link) => (
           <li key={link.url}>
-            <Text variant="smallestException" tag="a" href={link.url}>
+            <Text variant="smallestException" tag="a" href={link.url} color="tertiary.main">
               {link.text}
             </Text>
           </li>
         ))}
       </PublicMenuWrapper.Central>
       <PublicMenuWrapper.RightSide>
-        <Button ghost variant="secondary.main" href="/app/login">
+        <Button ghost variant="secondary" href="/app/login">
           Entrar
         </Button>
-        <Button variant="primary.main" onClick={() => toggleModal(<FormRegister />)}>
+        <Button variant="primary" onClick={() => toggleModal(<FormRegister />)}>
           Cadastrar
         </Button>
       </PublicMenuWrapper.RightSide>

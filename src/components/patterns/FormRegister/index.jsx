@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Lottie } from '@crello/react-lottie';
+import { ThemeContext } from 'styled-components';
 import successAnimation from './animations/success.json';
 import errorAnimation from './animations/error.json';
 import Button from '../../commons/Button';
@@ -81,7 +82,7 @@ function FormContent() {
       <Text
         variant="paragraph1"
         tag="p"
-        color="tertiary.light"
+        color="tertiary"
         marginBottom="32px"
       >
         Você está a um passo de saber tudoo que está
@@ -106,7 +107,7 @@ function FormContent() {
         />
       </div>
       <Button
-        variant="primary.main"
+        variant="primary"
         type="submit"
         disabled={isFormInvalid}
         fullWidth
@@ -148,6 +149,7 @@ function FormContent() {
 // eslint-disable-next-line react/prop-types
 export default function FormCadastro() {
   const { modalProps } = useWebsitePageContext();
+  const theme = useContext(ThemeContext);
 
   return (
     <Grid.Row
@@ -172,7 +174,9 @@ export default function FormCadastro() {
             xs: '16px',
             md: '85px',
           }}
-          backgroundColor="white"
+          backgroundColor={theme.currentActive === 'light'
+            ? theme.colors.background.color
+            : theme.colors.borders.color}
           // eslint-disable-next-line react/jsx-props-no-spreading
           {...modalProps}
         >

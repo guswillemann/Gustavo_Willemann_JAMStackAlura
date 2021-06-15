@@ -8,9 +8,9 @@ const SearchResultsWrapper = styled.div`
   right: 0;
   left: 0;
 
-  border: 1px solid ${({ theme }) => theme.colors.tertiary.light.color};
+  border: 1px solid ${({ theme }) => theme.colors.tertiary.color};
   border-radius: ${({ theme }) => theme.borderRadius};
-  background-color: ${({ theme }) => theme.colors.background.light.color};
+  background-color: ${({ theme }) => theme.colors.background.color};
 
   max-height: 20rem;
   overflow-y: scroll;
@@ -28,7 +28,7 @@ const SearchResultsWrapper = styled.div`
   }
 
   a:hover {
-    color: ${({ theme }) => theme.colors.primary.main.contrastText};
+    color: ${({ theme }) => theme.colors.tertiary.contrast};
   }
 `;
 
@@ -54,7 +54,7 @@ const SearchCard = styled.div`
   }
 
   &:hover {
-    background-color: ${({ theme }) => theme.colors.primary.main.color};
+    background-color: ${({ theme }) => theme.colors.primary.color};
   }
 `;
 
@@ -65,6 +65,7 @@ export default function SearchResults({ searchResult }) {
         <Text
           tag="p"
           margin="1rem"
+          color="tertiary.main"
         >
           {searchResult[0].message}
         </Text>
@@ -74,7 +75,7 @@ export default function SearchResults({ searchResult }) {
 
   return (
     <SearchResultsWrapper>
-      {searchResult.map((user) => (
+      {searchResult.map((user, index) => (
         <a
           key={user.username}
           href="https://google.com"
@@ -84,6 +85,7 @@ export default function SearchResults({ searchResult }) {
               <Text
                 tag="p"
                 margin="0"
+                color="tertiary.main"
               >
                 {user.name}
               </Text>
@@ -91,11 +93,12 @@ export default function SearchResults({ searchResult }) {
                 tag="p"
                 margin="0 0 0 0.5rem"
                 variant="paragraph2"
+                color="tertiary"
               >
                 {user.username}
               </Text>
             </div>
-            <img src="http://placehold.it/50x50" alt="Avatar" />
+            <img src={`http://picsum.photos/100?random=${index}`} alt="Avatar" />
           </SearchCard>
         </a>
       ))}

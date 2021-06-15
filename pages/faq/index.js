@@ -25,6 +25,11 @@ export async function getStaticProps() {
   return {
     props: {
       faqCategories,
+      pageWrapperProps: {
+        pageBoxProps: {
+          backgroundColor: 'background',
+        },
+      },
     },
   };
 }

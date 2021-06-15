@@ -151,7 +151,7 @@ export default function NewPostForm() {
           padding="0 24px"
         >
           <Button
-            variant="primary.main"
+            variant="primary"
             fullWidth
             onClick={onNext}
             disabled={isDisabled}
@@ -165,7 +165,7 @@ export default function NewPostForm() {
 
           {hasError && (
             <ErrorMessage
-              color="error.main"
+              color="error"
             >
               {errorMessage.current}
             </ErrorMessage>

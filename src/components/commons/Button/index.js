@@ -16,7 +16,7 @@ const ButtonGhost = css`
 const ButtonDefault = css`
   color: white;
   background-color: ${(props) => get(props.theme, `colors.${props.variant}.color`)};
-  color: ${(props) => get(props.theme, `colors.${props.variant}.contrastText`)};
+  color: ${(props) => get(props.theme, `colors.${props.variant}.contrast`)};
 `;
 
 const ButtonWrapper = styled.button`

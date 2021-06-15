@@ -30,13 +30,14 @@ export default function UserIdentification({ username, name }) {
     <UserIdenticationWrapper>
       <Text
         tag="h2"
+        color="tertiary.main"
         variant={{ xs: 'paragraph1Bold', md: 'subTitle' }}
       >
         {name}
       </Text>
       <Text
         tag="p"
-        color="tertiary.light"
+        color="tertiary"
         variant={{ xs: 'smallestException', md: 'paragraph1' }}
       >
         {username}

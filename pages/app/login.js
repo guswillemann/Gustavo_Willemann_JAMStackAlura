@@ -13,6 +13,7 @@ export default websitePageHOC(LoginScreen, {
       backgroundImage: 'url(/images/bubbles.svg)',
       backgroundRepeat: 'no-repeat',
       backgroundPosition: 'bottom right',
+      backgroundColor: 'background',
     },
   },
 });

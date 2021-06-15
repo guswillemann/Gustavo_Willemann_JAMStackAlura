@@ -31,6 +31,7 @@ export default function AboutScreen({ messages }) {
             />
 
             <Box
+              color="tertiary"
               dangerouslySetInnerHTML={{
                 __html: messages.pageAbout.pageDescription,
               }}

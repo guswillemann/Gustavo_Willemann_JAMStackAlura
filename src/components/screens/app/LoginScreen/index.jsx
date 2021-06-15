@@ -48,13 +48,13 @@ export default function LoginScreen() {
           <Text
             variant="paragraph1"
             tag="p"
-            color="tertiary.light"
+            color="tertiary"
             textAlign="center"
           >
             {'Não tem uma conta? '}
             <Link
               href="/"
-              color="secondary.main"
+              color="secondary"
               onClick={(event) => {
                 event.preventDefault();
                 websitePageContext.toggleModal(<FormRegister />);

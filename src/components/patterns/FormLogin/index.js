@@ -78,7 +78,7 @@ export default function LoginForm({ onSubmit }) {
 
       <Button
         type="submit"
-        variant="primary.main"
+        variant="primary"
         margin={{
           xs: '0 auto',
           md: 'initial',

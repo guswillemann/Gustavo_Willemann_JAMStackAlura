@@ -2,7 +2,7 @@ import React from 'react';
 import FAQQuestionScreen from '../../src/components/screens/FAQQuestionScreen';
 import websitePageHOC from '../../src/components/wrappers/WebsitePage/hoc';
 
-function FAQInternaScreen({ category, question }) {
+function FAQQuestionPage({ category, question }) {
   return (
     <FAQQuestionScreen
       question={question}
@@ -11,9 +11,9 @@ function FAQInternaScreen({ category, question }) {
   );
 }
 
-FAQInternaScreen.propTypes = FAQQuestionScreen.propTypes;
+FAQQuestionPage.propTypes = FAQQuestionScreen.propTypes;
 
-export default websitePageHOC(FAQInternaScreen);
+export default websitePageHOC(FAQQuestionPage);
 
 export async function getStaticProps({ params }) {
   const pageSlug = params.slug;
@@ -35,6 +35,9 @@ export async function getStaticProps({ params }) {
       pageWrapperProps: {
         seoProps: {
           headTitle: question.title,
+        },
+        pageBoxProps: {
+          backgroundColor: 'background',
         },
       },
     },
