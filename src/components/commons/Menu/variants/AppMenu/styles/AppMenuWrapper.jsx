@@ -10,6 +10,9 @@ const AppMenuWrapper = styled.nav`
   padding: 12px 28px;
   border-top-left-radius: ${({ theme }) => theme.borderRadius};
   border-top-right-radius: ${({ theme }) => theme.borderRadius};
+  ${({ theme }) => (theme.currentActive === 'dark' && css`
+    border-top: 2px solid ${theme.colors.borders.color};
+  `)};
   
   position: fixed;
   right: 0;
