@@ -9,11 +9,20 @@ export default websitePageHOC(LoginScreen, {
     menuProps: {
       display: false,
     },
-    pageBoxProps: {
-      backgroundImage: 'url(/images/bubbles.svg)',
-      backgroundRepeat: 'no-repeat',
-      backgroundPosition: 'bottom right',
-      backgroundColor: 'background',
-    },
   },
 });
+
+export function getServerSideProps() {
+  return {
+    props: {
+      pageWrapperProps: {
+        pageBoxProps: {
+          backgroundThemedImage: '/bubbles.svg',
+          backgroundRepeat: 'no-repeat',
+          backgroundPosition: 'bottom right',
+          backgroundColor: 'background',
+        },
+      },
+    },
+  };
+}
