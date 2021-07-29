@@ -1,16 +1,20 @@
-import React, { useContext, useState } from 'react';
+import { parseCookies } from 'nookies';
 import PropTypes from 'prop-types';
+import React, { useContext, useEffect, useState } from 'react';
 import { ThemeProvider } from 'styled-components';
-import nookies from 'nookies';
 import commonTheme, { colorThemes } from '..';
 
 const AppThemeContext = React.createContext();
 
 export const INSTALURA_THEME_COOKIE = 'INSTALURA_THEME_COOKIE';
 
-export function AppThemeProvider({ children, serverThemeCookie }) {
-  const clientThemeCookie = nookies.get(null)[INSTALURA_THEME_COOKIE] || serverThemeCookie;
-  const [themeMode, setThemeMode] = useState(clientThemeCookie || 'light');
+export function AppThemeProvider({ children, themeCookie }) {
+  const [themeMode, setThemeMode] = useState(themeCookie || 'light');
+
+  useEffect(() => { // theme hydration for Static Pages
+    const hydrationThemeCookie = parseCookies()[INSTALURA_THEME_COOKIE];
+    if (hydrationThemeCookie) setThemeMode(hydrationThemeCookie);
+  }, []);
 
   return (
     <ThemeProvider
@@ -34,11 +38,11 @@ export function AppThemeProvider({ children, serverThemeCookie }) {
 
 AppThemeProvider.propTypes = {
   children: PropTypes.node.isRequired,
-  serverThemeCookie: PropTypes.string,
+  themeCookie: PropTypes.string,
 };
 
 AppThemeProvider.defaultProps = {
-  serverThemeCookie: undefined,
+  themeCookie: undefined,
 };
 
 export default function useAppThemeContext() {

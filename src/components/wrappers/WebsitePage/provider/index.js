@@ -3,9 +3,9 @@ import PropTypes from 'prop-types';
 import GlobalStyle from '../../../../theme/GlobalStyle';
 import { AppThemeProvider } from '../../../../theme/context/AppThemeContext';
 
-export default function WebsiteGlobalProvider({ children, serverThemeCookie }) {
+export default function WebsiteGlobalProvider({ children, themeCookie }) {
   return (
-    <AppThemeProvider serverThemeCookie={serverThemeCookie}>
+    <AppThemeProvider themeCookie={themeCookie}>
       <GlobalStyle />
       {children}
     </AppThemeProvider>
@@ -14,9 +14,9 @@ export default function WebsiteGlobalProvider({ children, serverThemeCookie }) {
 
 WebsiteGlobalProvider.propTypes = {
   children: PropTypes.node.isRequired,
-  serverThemeCookie: PropTypes.string,
+  themeCookie: PropTypes.string,
 };
 
 WebsiteGlobalProvider.defaultProps = {
-  serverThemeCookie: undefined,
+  themeCookie: undefined,
 };
