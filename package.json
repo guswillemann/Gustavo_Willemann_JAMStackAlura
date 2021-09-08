@@ -24,7 +24,7 @@
     "graphql-request": "^3.4.0",
     "jsonwebtoken": "^8.5.1",
     "lodash": "^4.17.21",
-    "next": "^11.0.0",
+    "next": "^11.1.2",
     "nookies": "^2.5.2",
     "prop-types": "^15.7.2",
     "react": "^17.0.1",
@@ -36,6 +36,7 @@
     "yup": "^0.32.9"
   },
   "devDependencies": {
+    "@next/eslint-plugin-next": "^11.1.2",
     "@testing-library/jest-dom": "^5.11.10",
     "@testing-library/react": "^11.2.6",
     "@testing-library/react-hooks": "^5.1.1",
