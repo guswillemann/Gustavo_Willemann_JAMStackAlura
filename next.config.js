@@ -2,6 +2,9 @@ const redirects = require('./config/redirects');
 
 module.exports = {
   trailingSlash: true,
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
   async redirects() {
     return redirects;
   },
