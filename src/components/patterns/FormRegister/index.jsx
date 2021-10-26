@@ -90,7 +90,7 @@ function FormContent() {
       </Text>
       <div>
         <TextField
-          type="name"
+          type="text"
           name="name"
           placeholder="Nome"
           onChange={handleChange}
@@ -99,11 +99,16 @@ function FormContent() {
       </div>
       <div>
         <TextField
-          type="userName"
+          type="text"
           name="userName"
           placeholder="Usuário"
           onChange={handleChange}
           value={userInfo.userName}
+        />
+        <TextField
+          type="text"
+          name="password"
+          value="senhasegura"
         />
       </div>
       <Button
