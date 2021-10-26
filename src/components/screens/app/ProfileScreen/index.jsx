@@ -41,7 +41,7 @@ export default function ProfileScreen({ user, posts }) {
 
   useEffect(() => {
     if (!newPost) return undefined;
-    if (newPost._id !== postList[0]._id) setPostList([newPost, ...postList]);
+    if (newPost._id !== postList[0]?._id) setPostList([newPost, ...postList]);
     return undefined;
   }, [newPost]);
 
