@@ -10,6 +10,11 @@ describe('/pages/app/profile/', () => {
     loginScreen
       .fillLoginForm({ user: 'integrationtester', password: 'senhasegura' })
       .submitLoginForm();
+
+    cy.intercept('https://instalura-api-git-master-omariosouto.vercel.app/api/login')
+      .as('submit');
+
+    cy.wait('@submit');
   });
   describe('create a new post from profile', () => {
     it('opens the new post window and submit a new post', () => {

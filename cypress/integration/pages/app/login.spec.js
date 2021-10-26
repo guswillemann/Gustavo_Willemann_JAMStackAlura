@@ -13,6 +13,10 @@ describe('/pages/app/login/', () => {
         .fillLoginForm({ user: 'omariosouto', password: 'senhasegura' })
         .submitLoginForm();
 
+      cy.intercept('https://instalura-api-git-master-omariosouto.vercel.app/api/login')
+        .as('submit');
+
+      cy.wait('@submit');
       cy.url().should('include', '/app/profile');
       cy.wait('@userLogin')
         .then((intercept) => {
