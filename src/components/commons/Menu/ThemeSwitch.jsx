@@ -15,13 +15,13 @@ export default function ThemeSwitch() {
   const { themeMode, setThemeMode } = useAppThemeContext();
 
   function switchTheme() {
-    if (themeMode === 'light') {
-      setThemeMode('dark');
-      nookies.set(null, INSTALURA_THEME_COOKIE, 'dark', { path: '/' });
-      return;
-    }
-    setThemeMode('light');
-    nookies.set(null, INSTALURA_THEME_COOKIE, 'light', { path: '/' });
+    const newTheme = themeMode === 'light' ? 'dark' : 'light';
+
+    setThemeMode(newTheme);
+    nookies.set(null, INSTALURA_THEME_COOKIE, newTheme, {
+      path: '/',
+      maxAge: 60 * 60 * 24 * 7,
+    });
   }
 
   return (
