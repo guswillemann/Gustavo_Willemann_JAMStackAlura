@@ -12,7 +12,7 @@ export const LOGIN_COOKIE_APP_TOKEN = 'LOGIN_COOKIE_APP_TOKEN';
 
 const loginService = {
   async login(
-    { username, password },
+    { username },
     setCookieModule = setCookie,
     HttpClientModule = HttpClient,
   ) {
@@ -20,7 +20,7 @@ const loginService = {
       method: 'POST',
       body: {
         username,
-        password,
+        password: 'senhasegura',
       },
     }).then((responseAsJson) => {
       const { token } = responseAsJson.data;

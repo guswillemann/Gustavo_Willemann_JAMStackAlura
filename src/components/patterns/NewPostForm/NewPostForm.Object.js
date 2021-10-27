@@ -25,6 +25,10 @@ export default class NewPostFormObject {
   }
 
   submitPost() {
+    this.cy.intercept('https://instalura-api.vercel.app/api/posts')
+      .as('postSubmit');
+
     this.cy.get('#newPostForm [name=nextStepBtn]').click();
+    this.cy.wait('@postSubmit');
   }
 }

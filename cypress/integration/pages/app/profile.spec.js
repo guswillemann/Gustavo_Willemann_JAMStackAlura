@@ -6,10 +6,15 @@ import ProfileScreenPageObject from '../../../../src/components/screens/app/Prof
 
 describe('/pages/app/profile/', () => {
   beforeEach(() => {
+    cy.intercept('https://instalura-api-git-master-omariosouto.vercel.app/api/login')
+      .as('userLogin');
+
     const loginScreen = new LoginScreenPageObject(cy);
     loginScreen
       .fillLoginForm({ user: 'integrationtester', password: 'senhasegura' })
       .submitLoginForm();
+
+    cy.wait('@userLogin');
   });
   describe('create a new post from profile', () => {
     it('opens the new post window and submit a new post', () => {

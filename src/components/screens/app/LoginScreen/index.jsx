@@ -9,7 +9,7 @@ import FormRegister from '../../../patterns/FormRegister';
 import useWebsitePageContext from '../../../wrappers/WebsitePage/context';
 
 export default function LoginScreen() {
-  const websitePageContext = useWebsitePageContext;
+  const { toggleModal } = useWebsitePageContext();
 
   return (
     <Grid.Container
@@ -58,7 +58,7 @@ export default function LoginScreen() {
               color="secondary"
               onClick={(event) => {
                 event.preventDefault();
-                websitePageContext.toggleModal(<FormRegister />);
+                toggleModal(<FormRegister />);
               }}
             >
               Cadastre-se

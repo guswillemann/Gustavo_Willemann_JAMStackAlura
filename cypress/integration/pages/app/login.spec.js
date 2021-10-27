@@ -13,7 +13,6 @@ describe('/pages/app/login/', () => {
         .fillLoginForm({ user: 'omariosouto', password: 'senhasegura' })
         .submitLoginForm();
 
-      cy.url().should('include', '/app/profile');
       cy.wait('@userLogin')
         .then((intercept) => {
           const { token } = intercept.response.body.data;
@@ -21,6 +20,8 @@ describe('/pages/app/login/', () => {
             .should('exist')
             .should('have.property', 'value', token);
         });
+
+      cy.url().should('include', '/app/profile');
     });
   });
 });

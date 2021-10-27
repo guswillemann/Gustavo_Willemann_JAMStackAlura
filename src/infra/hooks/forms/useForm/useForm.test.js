@@ -3,11 +3,14 @@ import useForm from './index';
 
 describe('useForm()', () => {
   describe('when user types', () => {
-    test('change the value', () => {
+    test('change the value', async () => {
       const initialValues = { info: 'someinfo' };
+
       const { result } = renderHook(() => useForm({
         initialValues,
+        validateSchema: () => Promise.resolve(null),
       }));
+
       expect(result.current.values).toEqual(initialValues);
 
       const event = {
