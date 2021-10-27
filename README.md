@@ -2,7 +2,7 @@
 
 Project developed at [Alura](https://www.alura.com.br/)'s Front-End JAMStack Bootcamp, held between February and August 2021.
 
-Project deploy: [https://instalura.guswillemann.vercel.app/](https://instalura.guswillemann.vercel.app/")
+Project deploy: [https://instalura.guswillemann.vercel.app/](https://instalura.guswillemann.vercel.app/)
 
 ![Instalura Home page](.github/instalura.png)
 
@@ -37,6 +37,6 @@ There was a challenge at the end of the Bootcamp. It was to build the app profil
 
 ## 📜 Certificate
 
-<a href="https://bootcamps.alura.com.br/bootcamp/certificate/cdf950e6-5469-44f9-98dd-db27d697f09e/">
+<a href="https://bootcamps.alura.com.br/bootcamp/certificate/cdf950e6-5469-44f9-98dd-db27d697f09e">
   <img src=".github/certificate.png" alt="Instalura Home page" />
 </a>
