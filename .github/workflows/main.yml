@@ -31,9 +31,9 @@ jobs:
       - name: Node Version
         run: node -v
       - name: Install de dependencias
-        run: npm install
+        run: yarn install
       - name: Roda o Linter!
-        run: npm run lint
+        run: yarn lint
   unit_tests:
     name: Unit Tests
     runs-on: ubuntu-latest # The type of runner that the job will run on
